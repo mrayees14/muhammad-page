@@ -1,1 +1,195 @@
-<h1>Coming Soon...</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#20b9b5">
+  <meta name="description" content="Muhammad Rayees — personal website">
+  <title>Muhammad Rayees</title>
+  <style>
+    :root {
+      --turquoise: #20b9b5;
+      --deep-turquoise: #087f83;
+      --camel-gold: #c49a52;
+      --glass: rgba(255, 255, 255, .19);
+      --glass-border: rgba(255, 255, 255, .48);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: white;
+      background-color: var(--turquoise);
+      background-image:
+        linear-gradient(30deg, rgba(255,255,255,.13) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.13) 87.5%, rgba(255,255,255,.13)),
+        linear-gradient(150deg, rgba(255,255,255,.13) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.13) 87.5%, rgba(255,255,255,.13)),
+        linear-gradient(30deg, rgba(255,255,255,.13) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.13) 87.5%, rgba(255,255,255,.13)),
+        linear-gradient(150deg, rgba(255,255,255,.13) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,.13) 87.5%, rgba(255,255,255,.13)),
+        linear-gradient(60deg, rgba(0,91,97,.10) 25%, transparent 25.5%, transparent 75%, rgba(0,91,97,.10) 75%, rgba(0,91,97,.10)),
+        linear-gradient(60deg, rgba(0,91,97,.10) 25%, transparent 25.5%, transparent 75%, rgba(0,91,97,.10) 75%, rgba(0,91,97,.10));
+      background-position: 0 0, 0 0, 42px 73px, 42px 73px, 0 0, 42px 73px;
+      background-size: 84px 146px;
+    }
+
+    .content {
+      width: min(92vw, 900px);
+      margin-top: -8vh;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      animation: rise-in .9s ease both;
+    }
+
+    h1 {
+      margin: 0 0 38px;
+      color: var(--camel-gold);
+      font-size: clamp(2.6rem, 8vw, 6.2rem);
+      line-height: 1.04;
+      letter-spacing: -.055em;
+      font-weight: 850;
+      text-shadow: 0 3px 0 rgba(91, 61, 23, .08), 0 14px 35px rgba(0, 75, 79, .16);
+    }
+
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .glass-link {
+      min-width: 142px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      padding: 14px 20px;
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 650;
+      letter-spacing: .01em;
+      border: 1px solid var(--glass-border);
+      border-radius: 19px;
+      background: linear-gradient(135deg, rgba(255,255,255,.34), rgba(255,255,255,.09));
+      box-shadow: 0 10px 30px rgba(0, 70, 74, .15), inset 0 1px 0 rgba(255,255,255,.48);
+      backdrop-filter: blur(18px) saturate(155%);
+      -webkit-backdrop-filter: blur(18px) saturate(155%);
+      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .glass-link:hover {
+      transform: translateY(-5px);
+      background: linear-gradient(135deg, rgba(255,255,255,.46), rgba(255,255,255,.16));
+      box-shadow: 0 16px 34px rgba(0, 70, 74, .22), inset 0 1px 0 rgba(255,255,255,.62);
+    }
+
+    .glass-link:focus-visible {
+      outline: 3px solid white;
+      outline-offset: 4px;
+    }
+
+    .glass-link svg {
+      width: 21px;
+      height: 21px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,.12));
+    }
+
+    .pokemon-row {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      gap: 1vw;
+      padding: 0 max(2vw, 12px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .pokemon-row img {
+      width: clamp(82px, 15vw, 176px);
+      height: auto;
+      image-rendering: pixelated;
+      filter: drop-shadow(0 8px 5px rgba(0, 70, 74, .2));
+      animation: bob 3.5s ease-in-out infinite;
+    }
+
+    .pokemon-row img:nth-child(2) { animation-delay: -.8s; }
+    .pokemon-row img:nth-child(3) { animation-delay: -1.6s; }
+    .pokemon-row img:nth-child(4) { animation-delay: -2.4s; }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(8px); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .content { margin-top: -13vh; }
+      h1 { margin-bottom: 28px; }
+      .glass-link { min-width: 132px; padding: 12px 15px; }
+      .pokemon-row { justify-content: space-between; }
+      .pokemon-row img { width: 23vw; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="content">
+    <h1>muhammad rayees</h1>
+
+    <nav class="links" aria-label="Main links">
+      <a class="glass-link" href="#photos" aria-label="Photos">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7.5h3l1.5-2h7l1.5 2h3A1.5 1.5 0 0 1 21.5 9v9a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 18V9A1.5 1.5 0 0 1 4 7.5Z"/>
+          <circle cx="12" cy="13" r="3.5"/>
+        </svg>
+        Photos
+      </a>
+
+      <a class="glass-link" href="mailto:muhammad@rayees.org" aria-label="Email Muhammad">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/>
+          <path d="m3.5 6 8.5 7 8.5-7"/>
+        </svg>
+        Email
+      </a>
+    </nav>
+  </main>
+
+  <div class="pokemon-row" aria-hidden="true">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" alt="">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" alt="">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="">
+  </div>
+</body>
+</html>
