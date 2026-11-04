@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
   <meta name="theme-color" content="#20b9b5">
   <meta name="description" content="Muhammad Rayees — personal website">
   <title>Muhammad Rayees</title>
+
   <style>
     :root {
       --turquoise: #20b9b5;
@@ -134,6 +136,43 @@
     .pokemon-row img:nth-child(3) { animation-delay: -1.6s; }
     .pokemon-row img:nth-child(4) { animation-delay: -2.4s; }
 
+    /* Minecraft mobs */
+
+    .mob {
+      position: fixed;
+      height: auto;
+      object-fit: contain;
+      animation: float 3s ease-in-out infinite;
+      z-index: 3;
+      pointer-events: none;
+      filter: drop-shadow(0 5px 5px rgba(0,70,74,.18));
+    }
+
+    .turtle {
+      bottom: 15px;
+      left: 15px;
+      width: 130px;
+    }
+
+    .panda {
+      top: 15px;
+      right: 15px;
+      width: 115px;
+      animation-delay: .5s;
+    }
+
+    .axolotl {
+      bottom: 15px;
+      right: 15px;
+      width: 150px;
+      animation-delay: 1s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
     @keyframes bob {
       0%, 100% { transform: translateY(8px); }
       50% { transform: translateY(-5px); }
@@ -150,6 +189,10 @@
       .glass-link { min-width: 132px; padding: 12px 15px; }
       .pokemon-row { justify-content: space-between; }
       .pokemon-row img { width: 23vw; }
+
+      .turtle { width: 85px; }
+      .panda { width: 85px; }
+      .axolotl { width: 105px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -162,11 +205,14 @@
     }
   </style>
 </head>
+
 <body>
+
   <main class="content">
     <h1>muhammad rayees</h1>
 
     <nav class="links" aria-label="Main links">
+
       <a class="glass-link" href="#photos" aria-label="Photos">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 7.5h3l1.5-2h7l1.5 2h3A1.5 1.5 0 0 1 21.5 9v9a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 18V9A1.5 1.5 0 0 1 4 7.5Z"/>
@@ -182,14 +228,37 @@
         </svg>
         Email
       </a>
+
     </nav>
   </main>
 
+  <!-- Pokémon -->
   <div class="pokemon-row" aria-hidden="true">
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" alt="">
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" alt="">
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png" alt="">
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="">
   </div>
+
+  <!-- Minecraft mobs -->
+
+  <img
+    class="mob turtle"
+    src="https://ifzp2hwuc5.ufs.sh/f/RFyaFWbnYvRpRotSgGpbnYvRpxzAyhQgwC9F5KZEocLX06dP"
+    alt="Minecraft Turtle"
+  >
+
+  <img
+    class="mob panda"
+    src="https://ifzp2hwuc5.ufs.sh/f/RFyaFWbnYvRpBnlH1KGWxHnvtDr8S0Z9bcfJQhEVd1TY7Gw3"
+    alt="Minecraft Panda"
+  >
+
+  <img
+    class="mob axolotl"
+    src="https://i.imgur.com/5HvCvKs.png"
+    alt="Minecraft Cyan Axolotl"
+  >
+
 </body>
 </html>
