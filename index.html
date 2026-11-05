@@ -8,10 +8,10 @@
   <meta name="description" content="Muhammad Rayees — personal website">
   <title>Muhammad Rayees</title>
   <link
-  rel="icon"
-  type="image/png"
-  href="https://i.imgur.com/LJmJAy9.png"
->
+    rel="icon"
+    type="image/png"
+    href="https://i.imgur.com/LJmJAy9.png"
+  >
 
   <style>
     :root {
@@ -462,6 +462,37 @@
       letter-spacing: -.025em;
     }
 
+    /* NEW — WIKI POINTER */
+
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 18px;
+      padding: 8px 14px;
+      color: rgba(255,255,255,.75);
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .025em;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 30px;
+      background: rgba(255,255,255,.07);
+      transition:
+        color .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        transform .25s ease;
+    }
+
+    .pokemon-card:hover .card-cta,
+    .pokemon-card:focus-visible .card-cta {
+      color: white;
+      background: rgba(255,255,255,.17);
+      border-color: rgba(255,255,255,.5);
+      transform: translateY(-2px);
+    }
+
     /* Pokémon type badges */
 
     .type-list {
@@ -631,26 +662,20 @@
       z-index: 3;
       left: 50%;
       top: 56%;
-
       width: clamp(230px,29vw,340px);
       aspect-ratio: 4 / 5;
-
       display: grid;
       grid-template-columns: repeat(4,1fr);
       grid-template-rows: repeat(5,1fr);
       gap: 4px;
-
       transform:
         translate(-50%,-50%)
         scale(var(--portal-scale));
-
       opacity: var(--portal-opacity);
       transform-origin: center;
       will-change: transform,opacity;
       filter: drop-shadow(0 0 28px rgba(165,71,255,.45));
     }
-
-    /* All fourteen obsidian blocks */
 
     .obsidian-block {
       background-image: url("https://i.imgur.com/vn4mCPd.png");
@@ -658,21 +683,16 @@
       background-position: center;
       border: 2px solid #100918;
       image-rendering: pixelated;
-
       box-shadow:
         inset 2px 2px rgba(255,255,255,.06),
         inset -3px -3px rgba(0,0,0,.4),
         0 0 10px rgba(130,60,190,.12);
     }
 
-    /* Top four */
-
     .obsidian-block:nth-child(1) { grid-area: 1 / 1; }
     .obsidian-block:nth-child(2) { grid-area: 1 / 2; }
     .obsidian-block:nth-child(3) { grid-area: 1 / 3; }
     .obsidian-block:nth-child(4) { grid-area: 1 / 4; }
-
-    /* Left and right sides */
 
     .obsidian-block:nth-child(5) { grid-area: 2 / 1; }
     .obsidian-block:nth-child(6) { grid-area: 2 / 4; }
@@ -683,14 +703,10 @@
     .obsidian-block:nth-child(9) { grid-area: 4 / 1; }
     .obsidian-block:nth-child(10) { grid-area: 4 / 4; }
 
-    /* Bottom four */
-
     .obsidian-block:nth-child(11) { grid-area: 5 / 1; }
     .obsidian-block:nth-child(12) { grid-area: 5 / 2; }
     .obsidian-block:nth-child(13) { grid-area: 5 / 3; }
     .obsidian-block:nth-child(14) { grid-area: 5 / 4; }
-
-    /* Portal interior */
 
     .portal-interior {
       grid-column: 2 / 4;
@@ -710,8 +726,6 @@
       image-rendering: pixelated;
       animation: portal-texture-motion 3s steps(5,end) infinite alternate;
     }
-
-    /* Six glowing effects */
 
     .portal-glows {
       position: absolute;
@@ -806,7 +820,6 @@
       overflow: hidden;
       isolation: isolate;
       color: white;
-
       background:
         radial-gradient(ellipse at 50% 5%,rgba(111,255,144,.20),transparent 48%),
         linear-gradient(180deg,#17384c 0%,#23503a 48%,#14291e 100%);
@@ -1026,13 +1039,17 @@
       .pokemon-card h3 { font-size: 1.05rem; }
       .type-badge { font-size: .7rem; padding: 5px 9px; }
 
+      .card-cta {
+        font-size: .68rem;
+        padding: 7px 10px;
+        margin-top: 14px;
+      }
+
       .pokemon-world { padding: 90px 5vw 70px; }
       .minecraft-world { padding: 85px 5vw 70px; }
 
       .world-header,
       .minecraft-header { margin-bottom: 38px; }
-
-      /* Nether text stays within the screen */
 
       .nether-copy {
         top: max(24px,env(safe-area-inset-top));
@@ -1197,9 +1214,9 @@
     <div class="world-inner">
 
       <header class="world-header">
-        <span class="world-eyebrow">Welcome to my world</span>
+        <span class="world-eyebrow">Gotta catch em all!</span>
         <h2>Pokémon.</h2>
-        <p>A few of my favorite Pokémon.</p>
+        <p>Either cute or powerful, nothing else</p>
       </header>
 
       <div class="pokemon-grid">
@@ -1208,45 +1225,77 @@
            href="https://bulbapedia.bulbagarden.net/wiki/Eevee"
            target="_blank" rel="noopener noreferrer"
            aria-label="Read about Eevee">
+
           <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png" alt="Eevee">
+
           <h3>Eevee</h3>
+
           <div class="type-list">
             <span class="type-badge type-normal">⚪ Normal</span>
           </div>
+
+          <span class="card-cta">
+            Explore the wiki <span aria-hidden="true">↗</span>
+          </span>
+
         </a>
 
         <a class="pokemon-card"
            href="https://bulbapedia.bulbagarden.net/wiki/Pikachu_%28pokemon%29"
            target="_blank" rel="noopener noreferrer"
            aria-label="Read about Pikachu">
+
           <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu">
+
           <h3>Pikachu</h3>
+
           <div class="type-list">
             <span class="type-badge type-electric">⚡ Electric</span>
           </div>
+
+          <span class="card-cta">
+            Explore the wiki <span aria-hidden="true">↗</span>
+          </span>
+
         </a>
 
         <a class="pokemon-card"
            href="https://bulbapedia.bulbagarden.net/wiki/Latios"
            target="_blank" rel="noopener noreferrer"
            aria-label="Read about Latios">
+
           <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/381.png" alt="Latios">
+
           <h3>Latios</h3>
+
           <div class="type-list">
             <span class="type-badge type-dragon">🐉 Dragon</span>
             <span class="type-badge type-psychic">🔮 Psychic</span>
           </div>
+
+          <span class="card-cta">
+            Explore the wiki <span aria-hidden="true">↗</span>
+          </span>
+
         </a>
 
         <a class="pokemon-card"
            href="https://bulbapedia.bulbagarden.net/wiki/Umbreon"
            target="_blank" rel="noopener noreferrer"
            aria-label="Read about Umbreon">
+
           <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png" alt="Umbreon">
+
           <h3>Umbreon</h3>
+
           <div class="type-list">
             <span class="type-badge type-dark">🌙 Dark</span>
           </div>
+
+          <span class="card-cta">
+            Explore the wiki <span aria-hidden="true">↗</span>
+          </span>
+
         </a>
 
       </div>
@@ -1271,21 +1320,18 @@
       <div class="nether-stars"></div>
       <div class="nether-haze"></div>
 
-      <!-- Text above portal -->
-
       <div class="nether-copy" id="netherCopy">
 
         <span class="nether-eyebrow">
-          A world beyond this one
+          More???
         </span>
 
         <h2>
-          <span>Ready for another</span>
-          <span>adventure?</span>
+          <span>There's always another world to discover.</span>
         </h2>
 
         <p>
-          Keep scrolling to step through the Nether portal.
+          Keep scrolling to continue your adventure!
         </p>
 
       </div>
@@ -1294,8 +1340,6 @@
 
       <div class="nether-portal" id="netherPortal">
 
-        <!-- 14 Obsidian blocks -->
-
         <span class="obsidian-block"></span>
         <span class="obsidian-block"></span>
         <span class="obsidian-block"></span>
@@ -1314,8 +1358,6 @@
         <span class="obsidian-block"></span>
         <span class="obsidian-block"></span>
         <span class="obsidian-block"></span>
-
-        <!-- Portal interior -->
 
         <div class="portal-interior">
 
@@ -1324,8 +1366,6 @@
             class="portal-texture"
             alt=""
           >
-
-          <!-- Six glowing effects -->
 
           <div class="portal-glows">
             <span class="portal-glow"></span>
@@ -1343,7 +1383,7 @@
       <div class="overworld-flash" id="overworldFlash"></div>
 
       <div class="nether-scroll-hint" id="netherHint">
-        ↓ &nbsp; Keep scrolling to enter the Nether portal
+        ↓ &nbsp; Keep scrolling to continue your adventure!
       </div>
 
     </div>
@@ -1361,12 +1401,12 @@
       <header class="minecraft-header">
 
         <span class="minecraft-eyebrow">
-          You made it to the Overworld
+          Welcome back. Hope you brought a pickaxe!
         </span>
 
         <h2>Minecraft.</h2>
 
-        <p>Meet my favorite Minecraft mobs.</p>
+        <p>Cute and blocky, my favorite</p>
 
       </header>
 
@@ -1376,24 +1416,45 @@
            href="https://minecraft.wiki/w/Turtle"
            target="_blank" rel="noopener noreferrer"
            aria-label="Read about Minecraft turtles">
+
           <img src="https://ifzp2hwuc5.ufs.sh/f/RFyaFWbnYvRpRotSgGpbnYvRpxzAyhQgwC9F5KZEocLX06dP" alt="Minecraft Turtle">
+
           <h3>Turtle</h3>
+
+          <span class="card-cta">
+            Explore the wiki <span aria-hidden="true">↗</span>
+          </span>
+
         </a>
 
         <a class="pokemon-card minecraft-card"
            href="https://minecraft.wiki/w/Panda"
            target="_blank" rel="noopener noreferrer"
            aria-label="Read about Minecraft pandas">
+
           <img src="https://ifzp2hwuc5.ufs.sh/f/RFyaFWbnYvRpBnlH1KGWxHnvtDr8S0Z9bcfJQhEVd1TY7Gw3" alt="Minecraft Panda">
+
           <h3>Panda</h3>
+
+          <span class="card-cta">
+            Explore the wiki <span aria-hidden="true">↗</span>
+          </span>
+
         </a>
 
         <a class="pokemon-card minecraft-card"
            href="https://minecraft.wiki/w/Axolotl#Cyan"
            target="_blank" rel="noopener noreferrer"
            aria-label="Read about Minecraft axolotls">
+
           <img src="https://i.imgur.com/5HvCvKs.png" alt="Minecraft Cyan Axolotl">
+
           <h3>Axolotl</h3>
+
+          <span class="card-cta">
+            Explore the wiki <span aria-hidden="true">↗</span>
+          </span>
+
         </a>
 
       </div>
