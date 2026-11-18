@@ -592,7 +592,29 @@ button {
       <div class="content-card">
         <h2>Player Management</h2>
         <div class="empty-state">
-          Player management tools are coming next.
+          <div class="section-header">
+  <div>
+    <h2>Players</h2>
+    <p>Manage registered players and their accounts.</p>
+  </div>
+  <button class="btn" onclick="loadPlayers()">Refresh Players</button>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h3>Registered Players</h3>
+    <input
+      type="text"
+      id="playerSearch"
+      placeholder="Search players..."
+      oninput="renderPlayers()"
+    >
+  </div>
+
+  <div id="playersList">
+    <p>Loading players...</p>
+  </div>
+</div>
         </div>
       </div>
     </section>
