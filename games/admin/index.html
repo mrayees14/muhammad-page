@@ -2,134 +2,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101313">
-  <title>Games Admin — Muhammad Rayees</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101313">
+<title>Games Admin — Muhammad Rayees</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #101313;
-      color: #f4f5f2;
-      font-family: Arial, sans-serif;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-    }
+:root {
+  --bg: #101313;
+  --panel: #191e1e;
+  --card: #202727;
+  --border: #303a39;
+  --text: #f4f5f2;
+  --muted: #929b98;
+  --turquoise: #20b9b5;
+}
 
-    .panel {
-      width: 100%;
-      max-width: 420px;
-      background: #191e1e;
-      border: 1px solid #303a39;
-      border-radius: 18px;
-      padding: 32px;
-    }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
 
-    .eyebrow {
-      color: #20b9b5;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
+/* LOGIN */
 
-    h1 {
-      margin: 12px 0 8px;
-      font-size: 30px;
-    }
+#loginScreen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
 
-    .description {
-      color: #929b98;
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
+.login-panel {
+  width: 100%;
+  max-width: 420px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px;
+}
 
-    label {
-      display: block;
-      margin: 18px 0 8px;
-      font-size: 13px;
-    }
+.eyebrow {
+  color: var(--turquoise);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
 
-    input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 9px;
-      border: 1px solid #394443;
-      background: #101313;
-      color: white;
-      font-size: 15px;
-      outline: none;
-    }
+h1 {
+  margin: 12px 0 8px;
+  font-size: 30px;
+}
 
-    input:focus {
-      border-color: #20b9b5;
-    }
+.description {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
 
-    button {
-      width: 100%;
-      margin-top: 24px;
-      padding: 14px;
-      border: none;
-      border-radius: 9px;
-      background: #20b9b5;
-      color: #071414;
-      font-weight: bold;
-      font-size: 15px;
-      cursor: pointer;
-    }
+label {
+  display: block;
+  margin: 18px 0 8px;
+  font-size: 13px;
+}
 
-    button:hover {
-      background: #38ceca;
-    }
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 9px;
+  border: 1px solid #394443;
+  background: var(--bg);
+  color: white;
+  font-size: 15px;
+  outline: none;
+}
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+input:focus {
+  border-color: var(--turquoise);
+}
 
-    #message {
-      margin-top: 18px;
-      color: #ff9292;
-      font-size: 13px;
-      line-height: 1.5;
-    }
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
 
-    .hidden {
-      display: none;
-    }
+.primary-button {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  border: none;
+  border-radius: 9px;
+  background: var(--turquoise);
+  color: #071414;
+  font-weight: bold;
+  font-size: 15px;
+}
 
-    .dashboard {
-      max-width: 900px;
-    }
+.primary-button:hover {
+  background: #38ceca;
+}
 
-    .game-card {
-      padding: 20px;
-      margin-top: 16px;
-      border: 1px solid #303a39;
-      border-radius: 12px;
-      background: #202727;
-    }
+.primary-button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
 
-    .game-card p {
-      color: #929b98;
-    }
+#message {
+  margin-top: 18px;
+  color: #ff9292;
+  font-size: 13px;
+  line-height: 1.5;
+}
 
-    .coming-soon {
-      color: #20b9b5;
-      font-size: 13px;
-    }
-  </style>
+.hidden {
+  display: none !important;
+}
+
+/* DASHBOARD LAYOUT */
+
+#dashboard {
+  min-height: 100vh;
+  display: flex;
+}
+
+.sidebar {
+  width: 245px;
+  flex-shrink: 0;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  padding: 0 12px 30px;
+}
+
+.brand h2 {
+  font-size: 19px;
+  margin: 10px 0 5px;
+}
+
+.brand p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0;
+}
+
+.nav-label {
+  color: #687370;
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  padding: 10px 12px;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  margin: 3px 0;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #aeb9b5;
+  text-align: left;
+  font-size: 14px;
+  transition: .2s;
+}
+
+.nav-button:hover {
+  background: #252e2d;
+  color: white;
+}
+
+.nav-button.active {
+  background: rgba(32,185,181,.13);
+  border-color: rgba(32,185,181,.22);
+  color: var(--turquoise);
+}
+
+.nav-icon {
+  width: 22px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.logout-button {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #202727;
+  color: #ff9999;
+  font-size: 13px;
+}
+
+.logout-button:hover {
+  background: #302525;
+}
+
+/* MAIN CONTENT */
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 38px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 35px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 27px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #20b9b5;
+}
+
+.section-description {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 8px 0 28px;
+}
+
+/* STATISTICS */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.stat-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 22px;
+  min-width: 0;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stat-value {
+  font-size: 31px;
+  font-weight: bold;
+  margin-top: 13px;
+}
+
+.stat-note {
+  color: #71807b;
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+/* CONTENT CARDS */
+
+.content-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 23px;
+  margin-bottom: 18px;
+}
+
+.content-card h2 {
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+
+.content-card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.empty-state {
+  padding: 35px 15px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+#overviewError {
+  color: #ff9292;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.loading {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .main-content {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 650px) {
+  #dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 16px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    padding: 0 5px 15px;
+  }
+
+  .sidebar nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .nav-button {
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 11px;
+    padding: 10px 4px;
+    margin: 0;
+  }
+
+  .sidebar-bottom {
+    padding-top: 12px;
+  }
+
+  .main-content {
+    padding: 22px 16px;
+  }
+
+  .stats-grid {
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .stat-value {
+    font-size: 25px;
+  }
+
+  .topbar h1 {
+    font-size: 23px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <main class="panel" id="loginPanel">
+<!-- LOGIN SCREEN -->
+
+<main id="loginScreen">
+  <div class="login-panel">
+
     <div class="eyebrow">Muhammad Rayees · Games</div>
     <h1>Admin Login</h1>
 
@@ -138,12 +419,9 @@
     </p>
 
     <form id="loginForm">
+
       <label for="username">Admin username</label>
-      <input
-        id="username"
-        autocomplete="username"
-        required
-      >
+      <input id="username" autocomplete="username" required>
 
       <label for="password">Main password</label>
       <input
@@ -162,190 +440,506 @@
         >
       </div>
 
-      <button type="submit" id="loginButton">
+      <button type="submit" class="primary-button" id="loginButton">
         Sign In
       </button>
 
       <div id="message" role="alert"></div>
+
     </form>
-  </main>
+  </div>
+</main>
 
-  <main class="panel dashboard hidden" id="dashboard">
-    <div class="eyebrow">Games Administration</div>
-    <h1>Dashboard</h1>
+<!-- DASHBOARD -->
 
-    <p class="description">
-      Welcome to your central games control panel.
-    </p>
+<div id="dashboard" class="hidden">
 
-    <div class="game-card">
-      <h2>Neegy Clicker</h2>
-      <p>Manage Neegies, producers, upgrades and saves.</p>
-      <span class="coming-soon">Management tools coming soon</span>
+  <aside class="sidebar">
+
+    <div class="brand">
+      <div class="eyebrow">Muhammad Rayees</div>
+      <h2>Games Admin</h2>
+      <p>Central control panel</p>
     </div>
 
-    <div class="game-card">
-      <h2>Player Management</h2>
-      <p>Manage accounts, permissions and player progress.</p>
-      <span class="coming-soon">Management tools coming soon</span>
+    <nav>
+
+      <div class="nav-label">MANAGEMENT</div>
+
+      <button class="nav-button active" data-page="overview">
+        <span class="nav-icon">⌂</span>
+        Overview
+      </button>
+
+      <button class="nav-button" data-page="players">
+        <span class="nav-icon">♙</span>
+        Players
+      </button>
+
+      <button class="nav-button" data-page="games">
+        <span class="nav-icon">🎮</span>
+        Games
+      </button>
+
+      <button class="nav-button" data-page="codes">
+        <span class="nav-icon">◇</span>
+        Redeem Codes
+      </button>
+
+      <div class="nav-label">SYSTEM</div>
+
+      <button class="nav-button" data-page="activity">
+        <span class="nav-icon">◷</span>
+        Activity Log
+      </button>
+
+      <button class="nav-button" data-page="settings">
+        <span class="nav-icon">⚙</span>
+        Settings
+      </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+      <button class="logout-button" id="logoutButton">
+        ↪ Log Out
+      </button>
     </div>
 
-    <div class="game-card">
+  </aside>
+
+  <main class="main-content">
+
+    <div class="topbar">
+      <h1 id="pageTitle">Overview</h1>
+
+      <div class="status">
+        <span class="status-dot"></span>
+        Admin panel
+      </div>
+    </div>
+
+    <!-- OVERVIEW PAGE -->
+
+    <section id="page-overview" class="page">
+
+      <div class="eyebrow">YOUR GAMES AT A GLANCE</div>
+
+      <h2>Welcome back!</h2>
+
+      <p class="section-description">
+        Here's what's happening across your games.
+      </p>
+
+      <div id="overviewError"></div>
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-label">Total Players</div>
+          <div class="stat-value" id="statPlayers">—</div>
+          <div class="stat-note">Registered accounts</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Games</div>
+          <div class="stat-value" id="statGames">—</div>
+          <div class="stat-note">Games with saved data</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Redeem Codes</div>
+          <div class="stat-value" id="statCodes">—</div>
+          <div class="stat-note">Total codes</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Redemptions</div>
+          <div class="stat-value" id="statRedemptions">—</div>
+          <div class="stat-note">Total rewards redeemed</div>
+        </div>
+
+      </div>
+
+      <div class="content-card">
+        <h2>Recent Activity</h2>
+        <p>
+          Your latest player activity, code redemptions and
+          administrative actions will appear here.
+        </p>
+        <div class="empty-state">
+          Activity feed will be connected in the next update.
+        </div>
+      </div>
+
+      <div class="content-card">
+        <h2>System Status</h2>
+        <p id="systemStatus" class="loading">
+          Checking database connection...
+        </p>
+      </div>
+
+    </section>
+
+    <!-- OTHER PAGES -->
+
+    <section id="page-players" class="page hidden">
+      <div class="eyebrow">ACCOUNT MANAGEMENT</div>
+      <h2>Players</h2>
+      <p class="section-description">
+        View accounts, manage bans and inspect player progress.
+      </p>
+      <div class="content-card">
+        <h2>Player Management</h2>
+        <div class="empty-state">
+          Player management tools are coming next.
+        </div>
+      </div>
+    </section>
+
+    <section id="page-games" class="page hidden">
+      <div class="eyebrow">GAME MANAGEMENT</div>
+      <h2>Games</h2>
+      <p class="section-description">
+        Manage your games and their individual settings.
+      </p>
+      <div class="content-card">
+        <h2>Your Games</h2>
+        <div class="empty-state">
+          Game management tools are coming next.
+        </div>
+      </div>
+    </section>
+
+    <section id="page-codes" class="page hidden">
+      <div class="eyebrow">REWARDS AND REDEMPTIONS</div>
       <h2>Redeem Codes</h2>
-      <p>Create and manage rewards across your games.</p>
-      <span class="coming-soon">Management tools coming soon</span>
-    </div>
+      <p class="section-description">
+        Create reward codes and manage their usage.
+      </p>
+      <div class="content-card">
+        <h2>Code Management</h2>
+        <div class="empty-state">
+          Redeem code management tools are coming next.
+        </div>
+      </div>
+    </section>
 
-    <button id="logoutButton">Log Out</button>
+    <section id="page-activity" class="page hidden">
+      <div class="eyebrow">SYSTEM HISTORY</div>
+      <h2>Activity Log</h2>
+      <p class="section-description">
+        Keep track of player activity and administrative actions.
+      </p>
+      <div class="content-card">
+        <h2>Recent Events</h2>
+        <div class="empty-state">
+          Activity log tools are coming next.
+        </div>
+      </div>
+    </section>
+
+    <section id="page-settings" class="page hidden">
+      <div class="eyebrow">CONFIGURATION</div>
+      <h2>Settings</h2>
+      <p class="section-description">
+        Manage your central games administration settings.
+      </p>
+      <div class="content-card">
+        <h2>System Settings</h2>
+        <div class="empty-state">
+          Settings tools are coming next.
+        </div>
+      </div>
+    </section>
+
   </main>
+</div>
 
-  <script>
-    const API =
-      "https://rayees-games-api.muhammad-rayees11.workers.dev";
+<script>
+const API =
+  "https://rayees-games-api.muhammad-rayees11.workers.dev";
 
-    const TOKEN_KEY = "rayees_admin_session";
+const TOKEN_KEY = "rayees_admin_session";
 
-    const loginPanel = document.getElementById("loginPanel");
-    const dashboard = document.getElementById("dashboard");
-    const message = document.getElementById("message");
+const loginScreen = document.getElementById("loginScreen");
+const dashboard = document.getElementById("dashboard");
 
-    const secondPasswordArea =
-      document.getElementById("secondPasswordArea");
+const message = document.getElementById("message");
 
-    const secondPasswordInput =
-      document.getElementById("secondPassword");
+const secondPasswordArea =
+  document.getElementById("secondPasswordArea");
 
-    const loginButton =
-      document.getElementById("loginButton");
+const secondPasswordInput =
+  document.getElementById("secondPassword");
 
-    function showDashboard() {
-      loginPanel.classList.add("hidden");
-      dashboard.classList.remove("hidden");
-    }
+const loginButton =
+  document.getElementById("loginButton");
 
-    function showLogin() {
-      dashboard.classList.add("hidden");
-      loginPanel.classList.remove("hidden");
-    }
+function getToken() {
+  return sessionStorage.getItem(TOKEN_KEY);
+}
 
-    function getToken() {
-      return sessionStorage.getItem(TOKEN_KEY);
-    }
+function showDashboard() {
+  loginScreen.classList.add("hidden");
+  dashboard.classList.remove("hidden");
 
-    async function checkLogin() {
-      const token = getToken();
+  loadOverview();
+}
 
-      if (!token) return;
+function showLogin() {
+  dashboard.classList.add("hidden");
+  loginScreen.classList.remove("hidden");
+}
 
-      try {
-        const response = await fetch(API + "/api/admin/me", {
-          method: "GET",
-          headers: {
-            "Authorization": "Bearer " + token
-          }
-        });
+// CHECK EXISTING LOGIN
 
-        const result = await response.json();
+async function checkLogin() {
+  const token = getToken();
 
-        if (result.authenticated) {
-          showDashboard();
-        } else {
-          sessionStorage.removeItem(TOKEN_KEY);
-        }
-      } catch {
-        message.textContent =
-          "Could not connect to the server. Try refreshing.";
+  if (!token) return;
+
+  try {
+    const response = await fetch(API + "/api/admin/me", {
+      headers: {
+        Authorization: "Bearer " + token
       }
+    });
+
+    const result = await response.json();
+
+    if (result.authenticated) {
+      showDashboard();
+    } else {
+      sessionStorage.removeItem(TOKEN_KEY);
     }
 
-    document.getElementById("loginForm").addEventListener(
-      "submit",
-      async function(event) {
-        event.preventDefault();
+  } catch {
+    message.textContent =
+      "Could not connect to the server. Try refreshing.";
+  }
+}
 
-        loginButton.disabled = true;
-        loginButton.textContent = "Signing in...";
-        message.textContent = "";
+// LOGIN
 
-        const body = {
-          username: document.getElementById("username").value,
-          password: document.getElementById("password").value,
-          secondPassword: secondPasswordInput.value
-        };
+document.getElementById("loginForm").addEventListener(
+  "submit",
+  async function(event) {
 
-        try {
-          const response = await fetch(API + "/api/admin/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body)
-          });
+    event.preventDefault();
 
-          const result = await response.json();
+    loginButton.disabled = true;
+    loginButton.textContent = "Signing in...";
+    message.textContent = "";
 
-          if (result.success && result.sessionToken) {
-            sessionStorage.setItem(
-              TOKEN_KEY,
-              result.sessionToken
-            );
+    const body = {
+      username: document.getElementById("username").value,
+      password: document.getElementById("password").value,
+      secondPassword: secondPasswordInput.value
+    };
 
-            document.getElementById("loginForm").reset();
-            secondPasswordArea.classList.add("hidden");
-            showDashboard();
-          } else {
-            const needsSecond =
-              result.requiresSecondPassword === true;
+    try {
 
-            secondPasswordArea.classList.toggle(
-              "hidden",
-              !needsSecond
-            );
+      const response = await fetch(API + "/api/admin/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      });
 
-            secondPasswordInput.required = needsSecond;
+      const result = await response.json();
 
-            if (needsSecond) {
-              secondPasswordInput.focus();
-            }
+      if (result.success && result.sessionToken) {
 
-            message.textContent =
-              result.error || "Login failed.";
-
-            if (result.locked || response.status === 429) {
-              loginButton.disabled = true;
-              loginButton.textContent = "Temporarily Locked";
-              return;
-            }
-          }
-        } catch {
-          message.textContent =
-            "Could not connect to the server. Try again.";
-        }
-
-        loginButton.disabled = false;
-        loginButton.textContent = "Sign In";
-      }
-    );
-
-    document.getElementById("logoutButton").addEventListener(
-      "click",
-      function() {
-        sessionStorage.removeItem(TOKEN_KEY);
+        sessionStorage.setItem(
+          TOKEN_KEY,
+          result.sessionToken
+        );
 
         document.getElementById("loginForm").reset();
+
         secondPasswordArea.classList.add("hidden");
-        secondPasswordInput.required = false;
 
-        message.textContent = "";
-        loginButton.disabled = false;
-        loginButton.textContent = "Sign In";
+        showDashboard();
 
-        showLogin();
+      } else {
+
+        const needsSecond =
+          result.requiresSecondPassword === true;
+
+        secondPasswordArea.classList.toggle(
+          "hidden",
+          !needsSecond
+        );
+
+        secondPasswordInput.required = needsSecond;
+
+        if (needsSecond) {
+          secondPasswordInput.focus();
+        }
+
+        message.textContent =
+          result.error || "Login failed.";
+
+        if (result.locked || response.status === 429) {
+          loginButton.disabled = true;
+          loginButton.textContent = "Temporarily Locked";
+          return;
+        }
       }
-    );
 
-    checkLogin();
-  </script>
+    } catch {
+
+      message.textContent =
+        "Could not connect to the server. Try again.";
+
+    }
+
+    loginButton.disabled = false;
+    loginButton.textContent = "Sign In";
+  }
+);
+
+// LOAD LIVE OVERVIEW DATA
+
+async function loadOverview() {
+
+  const errorBox = document.getElementById("overviewError");
+  const systemStatus = document.getElementById("systemStatus");
+
+  errorBox.textContent = "";
+
+  systemStatus.textContent = "Connecting to database...";
+
+  const token = getToken();
+
+  if (!token) {
+    systemStatus.textContent = "No admin session found.";
+    return;
+  }
+
+  try {
+
+    const response = await fetch(API + "/api/admin/overview", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+
+      if (response.status === 401) {
+        sessionStorage.removeItem(TOKEN_KEY);
+        showLogin();
+        message.textContent = "Your session expired. Please sign in again.";
+        return;
+      }
+
+      throw new Error(result.error || "Could not load overview.");
+    }
+
+    document.getElementById("statPlayers").textContent =
+      result.players ?? 0;
+
+    document.getElementById("statGames").textContent =
+      result.games ?? 0;
+
+    document.getElementById("statCodes").textContent =
+      result.codes ?? 0;
+
+    document.getElementById("statRedemptions").textContent =
+      result.redemptions ?? 0;
+
+    systemStatus.textContent =
+      "Connected successfully. Your database is online.";
+
+  } catch (error) {
+
+    errorBox.textContent =
+      "Could not load dashboard statistics: " + error.message;
+
+    systemStatus.textContent =
+      "Connection or data loading problem.";
+
+  }
+}
+
+// SIDEBAR NAVIGATION
+
+const navButtons = document.querySelectorAll(".nav-button");
+
+const pageTitles = {
+  overview: "Overview",
+  players: "Players",
+  games: "Games",
+  codes: "Redeem Codes",
+  activity: "Activity Log",
+  settings: "Settings"
+};
+
+navButtons.forEach(button => {
+
+  button.addEventListener("click", function() {
+
+    const selectedPage = this.dataset.page;
+
+    navButtons.forEach(item => {
+      item.classList.remove("active");
+    });
+
+    this.classList.add("active");
+
+    document.querySelectorAll(".page").forEach(page => {
+      page.classList.add("hidden");
+    });
+
+    document.getElementById(
+      "page-" + selectedPage
+    ).classList.remove("hidden");
+
+    document.getElementById("pageTitle").textContent =
+      pageTitles[selectedPage];
+
+    if (selectedPage === "overview") {
+      loadOverview();
+    }
+
+  });
+
+});
+
+// LOGOUT
+
+document.getElementById("logoutButton").addEventListener(
+  "click",
+  function() {
+
+    sessionStorage.removeItem(TOKEN_KEY);
+
+    document.getElementById("loginForm").reset();
+
+    secondPasswordArea.classList.add("hidden");
+    secondPasswordInput.required = false;
+
+    message.textContent = "";
+
+    loginButton.disabled = false;
+    loginButton.textContent = "Sign In";
+
+    showLogin();
+
+  }
+);
+
+// START
+
+checkLogin();
+
+</script>
 
 </body>
 </html>
