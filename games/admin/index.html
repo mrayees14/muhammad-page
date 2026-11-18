@@ -617,6 +617,33 @@ button {
 </div>
         </div>
       </div>
+      <div id="playerProfile" class="content-card hidden">
+  <div class="section-header">
+    <div>
+      <div class="eyebrow">PLAYER DETAILS</div>
+      <h2 id="profileUsername">Player</h2>
+      <p id="profileStatus">Account status</p>
+    </div>
+    <button class="btn" onclick="closePlayerProfile()">Close</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span>Games</span>
+      <strong id="profileGames">0</strong>
+    </div>
+    <div class="stat-card">
+      <span>Achievements</span>
+      <strong id="profileAchievements">0</strong>
+    </div>
+    <div class="stat-card">
+      <span>Redemptions</span>
+      <strong id="profileRedemptions">0</strong>
+    </div>
+  </div>
+
+  <div id="profileExtra"></div>
+</div>
     </section>
 
     <section id="page-games" class="page hidden">
