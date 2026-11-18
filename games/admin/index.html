@@ -88,6 +88,11 @@
       background: #38ceca;
     }
 
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     #message {
       margin-top: 18px;
       color: #ff9292;
@@ -114,6 +119,11 @@
     .game-card p {
       color: #929b98;
     }
+
+    .coming-soon {
+      color: #20b9b5;
+      font-size: 13px;
+    }
   </style>
 </head>
 
@@ -129,16 +139,27 @@
 
     <form id="loginForm">
       <label for="username">Admin username</label>
-      <input id="username" autocomplete="username" required>
+      <input
+        id="username"
+        autocomplete="username"
+        required
+      >
 
       <label for="password">Main password</label>
-      <input id="password" type="password"
-        autocomplete="current-password" required>
+      <input
+        id="password"
+        type="password"
+        autocomplete="current-password"
+        required
+      >
 
       <div id="secondPasswordArea" class="hidden">
         <label for="secondPassword">Second password</label>
-        <input id="secondPassword" type="password"
-          autocomplete="off">
+        <input
+          id="secondPassword"
+          type="password"
+          autocomplete="off"
+        >
       </div>
 
       <button type="submit" id="loginButton">
@@ -159,77 +180,102 @@
 
     <div class="game-card">
       <h2>Neegy Clicker</h2>
-      <p>Game management controls will appear here.</p>
-      <span>Coming soon</span>
+      <p>Manage Neegies, producers, upgrades and saves.</p>
+      <span class="coming-soon">Management tools coming soon</span>
     </div>
 
     <div class="game-card">
       <h2>Player Management</h2>
       <p>Manage accounts, permissions and player progress.</p>
-      <span>Coming soon</span>
+      <span class="coming-soon">Management tools coming soon</span>
     </div>
 
     <div class="game-card">
       <h2>Redeem Codes</h2>
       <p>Create and manage rewards across your games.</p>
-      <span>Coming soon</span>
+      <span class="coming-soon">Management tools coming soon</span>
     </div>
 
     <button id="logoutButton">Log Out</button>
   </main>
 
   <script>
-    const API = "https://rayees-games-api.muhammad-rayees11.workers.dev";
+    const API =
+      "https://rayees-games-api.muhammad-rayees11.workers.dev";
+
+    const TOKEN_KEY = "rayees_admin_session";
 
     const loginPanel = document.getElementById("loginPanel");
     const dashboard = document.getElementById("dashboard");
     const message = document.getElementById("message");
+
     const secondPasswordArea =
       document.getElementById("secondPasswordArea");
 
-    let requiresSecondPassword = false;
+    const secondPasswordInput =
+      document.getElementById("secondPassword");
 
-    async function checkLogin() {
-      try {
-        const response = await fetch(API + "/api/admin/me", {
-          credentials: "include"
-        });
-
-        const result = await response.json();
-
-        if (result.authenticated) {
-          showDashboard();
-        }
-      } catch {
-        message.textContent = "Could not connect to the server.";
-      }
-    }
+    const loginButton =
+      document.getElementById("loginButton");
 
     function showDashboard() {
       loginPanel.classList.add("hidden");
       dashboard.classList.remove("hidden");
     }
 
+    function showLogin() {
+      dashboard.classList.add("hidden");
+      loginPanel.classList.remove("hidden");
+    }
+
+    function getToken() {
+      return sessionStorage.getItem(TOKEN_KEY);
+    }
+
+    async function checkLogin() {
+      const token = getToken();
+
+      if (!token) return;
+
+      try {
+        const response = await fetch(API + "/api/admin/me", {
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer " + token
+          }
+        });
+
+        const result = await response.json();
+
+        if (result.authenticated) {
+          showDashboard();
+        } else {
+          sessionStorage.removeItem(TOKEN_KEY);
+        }
+      } catch {
+        message.textContent =
+          "Could not connect to the server. Try refreshing.";
+      }
+    }
+
     document.getElementById("loginForm").addEventListener(
-      "submit", async function(event) {
+      "submit",
+      async function(event) {
         event.preventDefault();
 
-        const button = document.getElementById("loginButton");
-        button.disabled = true;
-        button.textContent = "Signing in...";
+        loginButton.disabled = true;
+        loginButton.textContent = "Signing in...";
         message.textContent = "";
 
         const body = {
           username: document.getElementById("username").value,
           password: document.getElementById("password").value,
-          secondPassword:
-            document.getElementById("secondPassword").value
+          secondPassword: secondPasswordInput.value
         };
 
         try {
           const response = await fetch(API + "/api/admin/login", {
             method: "POST",
-            credentials: "include",
             headers: {
               "Content-Type": "application/json"
             },
@@ -238,22 +284,37 @@
 
           const result = await response.json();
 
-          if (result.success) {
+          if (result.success && result.sessionToken) {
+            sessionStorage.setItem(
+              TOKEN_KEY,
+              result.sessionToken
+            );
+
             document.getElementById("loginForm").reset();
+            secondPasswordArea.classList.add("hidden");
             showDashboard();
           } else {
-            requiresSecondPassword =
+            const needsSecond =
               result.requiresSecondPassword === true;
 
             secondPasswordArea.classList.toggle(
-              "hidden", !requiresSecondPassword
+              "hidden",
+              !needsSecond
             );
+
+            secondPasswordInput.required = needsSecond;
+
+            if (needsSecond) {
+              secondPasswordInput.focus();
+            }
 
             message.textContent =
               result.error || "Login failed.";
 
-            if (result.locked) {
-              button.disabled = true;
+            if (result.locked || response.status === 429) {
+              loginButton.disabled = true;
+              loginButton.textContent = "Temporarily Locked";
+              return;
             }
           }
         } catch {
@@ -261,26 +322,25 @@
             "Could not connect to the server. Try again.";
         }
 
-        if (!button.disabled) {
-          button.textContent = "Sign In";
-        }
+        loginButton.disabled = false;
+        loginButton.textContent = "Sign In";
       }
     );
 
     document.getElementById("logoutButton").addEventListener(
-      "click", async function() {
-        try {
-          await fetch(API + "/api/admin/logout", {
-            method: "POST",
-            credentials: "include"
-          });
-        } finally {
-          dashboard.classList.add("hidden");
-          loginPanel.classList.remove("hidden");
-          document.getElementById("loginForm").reset();
-          secondPasswordArea.classList.add("hidden");
-          message.textContent = "";
-        }
+      "click",
+      function() {
+        sessionStorage.removeItem(TOKEN_KEY);
+
+        document.getElementById("loginForm").reset();
+        secondPasswordArea.classList.add("hidden");
+        secondPasswordInput.required = false;
+
+        message.textContent = "";
+        loginButton.disabled = false;
+        loginButton.textContent = "Sign In";
+
+        showLogin();
       }
     );
 
