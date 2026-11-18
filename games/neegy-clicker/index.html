@@ -1325,15 +1325,24 @@ function getBuildingUpgradeCount(buildingId) {
 
 }
 
+function getBuildingMultiplier(buildingId) {
+
+    const upgrades = getBuildingUpgradeCount(buildingId);
+
+    return Math.pow(2, upgrades);
+
+}
+
 function getBuildingProduction(building) {
 
     const owned = getOwned(building.id);
 
-    const upgrades = getBuildingUpgradeCount(building.id);
-
-    return owned * building.baseRate * Math.pow(2, upgrades);
+    return owned *
+        building.baseRate *
+        getBuildingMultiplier(building.id);
 
 }
+    
 
 function getTotalProduction() {
 
