@@ -4,20 +4,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Neegy Clicker</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 
 :root {
-    --background: #111426;
-    --surface: #1c2039;
+    --bg: #111426;
+    --panel: #1c2039;
+    --panel2: #252a46;
     --gold: #ffc94f;
     --gold-light: #ffe69a;
     --purple: #8b6aff;
     --text: #ffffff;
     --muted: #aeb3cd;
+    --green: #79dda1;
 }
 
 * {
@@ -29,83 +30,137 @@
 body {
     font-family: 'Nunito', sans-serif;
     background:
-        radial-gradient(circle at 50% 20%, #34254e, transparent 45%),
-        var(--background);
+        radial-gradient(circle at 20% 5%, #39265b, transparent 35%),
+        radial-gradient(circle at 90% 50%, #183b5d, transparent 35%),
+        var(--bg);
     color: var(--text);
     min-height: 100vh;
+}
+
+button, select {
+    font-family: inherit;
 }
 
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 6%;
-    border-bottom: 1px solid #ffffff12;
+    padding: 18px 5%;
+    border-bottom: 1px solid #ffffff15;
+    background: #11142690;
+    gap: 12px;
 }
 
-.back-link {
+header a {
     color: var(--muted);
     text-decoration: none;
-    font-weight: 800;
+    font-weight: 900;
 }
 
-.back-link:hover {
+header a:hover {
     color: white;
 }
 
 .header-title {
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 900;
 }
 
 .reset-button {
-    border: 1px solid #ffffff20;
     background: #ffffff0c;
     color: var(--muted);
-    border-radius: 10px;
+    border: 1px solid #ffffff20;
     padding: 9px 13px;
+    border-radius: 10px;
     cursor: pointer;
-    font-family: inherit;
 }
 
 .reset-button:hover {
+    background: #ffffff20;
     color: white;
-    background: #ffffff18;
 }
 
 .container {
-    max-width: 1100px;
+    max-width: 1250px;
+    padding: 35px 22px 65px;
     margin: auto;
-    padding: 35px 22px 60px;
 }
 
 .intro {
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 25px;
 }
 
 .intro h1 {
-    font-size: clamp(32px, 5vw, 46px);
+    font-size: clamp(32px, 5vw, 48px);
     font-weight: 900;
 }
 
 .intro p {
+    margin-top: 7px;
     color: var(--muted);
-    margin-top: 8px;
 }
 
-.game-layout {
+.top-stats {
     display: grid;
-    grid-template-columns: 1.2fr .8fr;
-    gap: 22px;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 13px;
+    margin-bottom: 22px;
+}
+
+.stat-card {
+    background: var(--panel);
+    border: 1px solid #ffffff12;
+    border-radius: 18px;
+    padding: 18px;
+    text-align: center;
+}
+
+.stat-card span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+.stat-card strong {
+    display: block;
+    font-size: clamp(20px, 4vw, 32px);
+    color: var(--gold);
+    margin-top: 3px;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    gap: 20px;
     align-items: start;
 }
 
 .panel {
-    background: var(--surface);
+    background: var(--panel);
     border: 1px solid #ffffff12;
-    border-radius: 24px;
-    padding: 25px;
+    border-radius: 22px;
+    padding: 22px;
+}
+
+.panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.panel-heading h2 {
+    font-size: 21px;
+    font-weight: 900;
+}
+
+.small-label {
+    font-size: 12px;
+    color: var(--muted);
 }
 
 .balance-section {
@@ -113,46 +168,48 @@ header {
 }
 
 .balance-label {
+    font-size: 13px;
+    font-weight: 900;
     color: var(--muted);
-    font-size: 14px;
-    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .balance {
-    font-size: clamp(36px, 7vw, 58px);
-    font-weight: 900;
     color: var(--gold);
-    margin: 5px 0;
-    text-shadow: 0 0 25px #ffc94f35;
+    font-size: clamp(39px, 6vw, 62px);
+    font-weight: 900;
+    text-shadow: 0 0 25px #ffc94f30;
+    line-height: 1.25;
+    margin: 4px 0;
 }
 
-.rate {
+.balance-rate {
     color: var(--muted);
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .coin-stage {
-    height: 350px;
-    max-width: 390px;
-    margin: 15px auto 5px;
     position: relative;
+    height: 335px;
     display: grid;
     place-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 .coin-button {
     position: relative;
     z-index: 2;
-    width: min(275px, 78%);
+    width: min(275px, 75%);
     aspect-ratio: 1;
-    padding: 0;
     border: none;
+    padding: 0;
     background: transparent;
     cursor: pointer;
-    transition: transform .12s;
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 .coin-button img {
@@ -160,17 +217,15 @@ header {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    border-radius: 50%;
-    filter: drop-shadow(0 12px 20px #00000070);
+    filter: drop-shadow(0 12px 22px #00000080);
     user-select: none;
     -webkit-user-drag: none;
 }
 
 .coin-fallback {
     display: none;
-    font-size: 180px;
-    line-height: 1;
-    filter: drop-shadow(0 12px 20px #00000070);
+    font-size: 170px;
+    filter: drop-shadow(0 12px 20px #00000080);
 }
 
 .coin-button:active {
@@ -178,7 +233,7 @@ header {
 }
 
 .coin-button.pop {
-    animation: coin-pop .25s ease;
+    animation: coin-pop .24s ease-out;
 }
 
 @keyframes coin-pop {
@@ -187,169 +242,44 @@ header {
     100% { transform: translateY(0) scale(1); }
 }
 
-.click-instruction {
-    color: var(--muted);
-    text-align: center;
-    font-size: 13px;
-    margin-bottom: 15px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-top: 20px;
-}
-
-.stat {
-    background: #ffffff09;
-    border-radius: 13px;
-    padding: 14px;
-    text-align: center;
-}
-
-.stat strong {
-    display: block;
-    font-size: 22px;
-    color: var(--gold);
-}
-
-.stat span {
-    font-size: 12px;
-    color: var(--muted);
-}
-
-.upgrades-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
-}
-
-.upgrades-heading h2 {
-    font-size: 23px;
-}
-
-.upgrade {
-    background: #ffffff09;
-    border: 1px solid #ffffff12;
-    border-radius: 17px;
-    padding: 17px;
-    margin-bottom: 13px;
-    transition: border-color .2s;
-}
-
-.upgrade:hover {
-    border-color: #ffc94f55;
-}
-
-.upgrade-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.upgrade-icon {
-    width: 47px;
-    height: 47px;
-    border-radius: 13px;
-    display: grid;
-    place-items: center;
-    font-size: 25px;
-    background: #ffffff12;
-}
-
-.upgrade-name {
-    font-size: 16px;
-    font-weight: 900;
-}
-
-.upgrade-description {
-    font-size: 12px;
-    color: var(--muted);
-}
-
-.upgrade-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.level {
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.buy-button {
-    border: none;
-    background: linear-gradient(135deg, #ffd66c, #eea927);
-    color: #30200a;
-    border-radius: 10px;
-    padding: 10px 13px;
-    font-weight: 900;
-    font-family: inherit;
-    cursor: pointer;
-    transition: transform .15s, filter .15s;
-}
-
-.buy-button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
-}
-
-.buy-button:disabled {
-    opacity: .4;
-    cursor: not-allowed;
-}
-
-.upgrade-note {
-    text-align: center;
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 10px;
-}
-
 .sparkle-layer,
 .floating-layer {
     position: absolute;
     inset: 0;
+    z-index: 3;
     pointer-events: none;
-    overflow: visible;
 }
 
 .sparkle {
     position: absolute;
     color: var(--gold-light);
-    font-size: 20px;
-    text-shadow: 0 0 15px #ffc94f;
-    animation: sparkle-anim .9s ease-out forwards;
+    text-shadow: 0 0 14px var(--gold);
+    animation: sparkle .95s ease-out forwards;
 }
 
-@keyframes sparkle-anim {
+@keyframes sparkle {
     0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(.2) rotate(0deg);
+        transform: translate(-50%, -50%) scale(.1) rotate(0);
     }
     30% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2) rotate(35deg);
+        transform: translate(-50%, -50%) scale(1.3) rotate(45deg);
     }
     100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(.3) rotate(100deg);
+        transform: translate(-50%, -50%) scale(.2) rotate(120deg);
     }
 }
 
 .floating-text {
     position: absolute;
     color: var(--gold-light);
-    font-weight: 900;
     font-size: 23px;
-    text-shadow: 0 2px 12px #000000;
-    animation: float-up .8s ease-out forwards;
+    font-weight: 900;
     white-space: nowrap;
+    text-shadow: 0 2px 12px black;
+    animation: float-up .85s ease-out forwards;
 }
 
 @keyframes float-up {
@@ -367,49 +297,302 @@ header {
     }
 }
 
-.toast {
-    position: fixed;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: #282c43;
-    border: 1px solid #ffc94f55;
-    color: var(--gold-light);
-    padding: 13px 20px;
-    border-radius: 14px;
-    font-weight: 800;
-    z-index: 10;
-    opacity: 0;
-    transition: .3s;
-    pointer-events: none;
+.click-instruction {
     text-align: center;
-    width: max-content;
-    max-width: 90%;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: -5px;
 }
 
-.toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+.click-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.mini-stat {
+    background: #ffffff09;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+}
+
+.mini-stat strong {
+    display: block;
+    font-size: 21px;
+    color: var(--gold);
+}
+
+.mini-stat span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.building-list {
+    display: grid;
+    gap: 10px;
+    max-height: 570px;
+    overflow-y: auto;
+    padding-right: 3px;
+}
+
+.building {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff09;
+    border: 1px solid #ffffff12;
+    border-radius: 15px;
+    padding: 13px;
+    transition: border-color .2s, background .2s;
+}
+
+.building:hover {
+    border-color: #8b6aff70;
+    background: #ffffff0e;
+}
+
+.building-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 12px;
+    background: #ffffff12;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.building-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.building-info h3 {
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.building-info p {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.building-count {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.buy-button {
+    background: linear-gradient(135deg, #ffdd76, #eeae32);
+    color: #36230b;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 900;
+    min-width: 92px;
+    transition: transform .15s, filter .15s;
+}
+
+.buy-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    filter: brightness(1.12);
+}
+
+.buy-button:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
+.upgrade-panel {
+    margin-top: 22px;
+}
+
+.upgrade-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.upgrade-header h2 {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.upgrade-filter {
+    background: var(--panel2);
+    color: white;
+    border: 1px solid #ffffff20;
+    border-radius: 10px;
+    padding: 10px 12px;
+    outline: none;
+    max-width: 100%;
+}
+
+.upgrade-progress {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 9px;
+    background: #ffffff12;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #8b6aff, #ffc94f);
+    border-radius: 20px;
+    transition: width .3s;
+}
+
+.upgrade-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.upgrade-card {
+    border: 1px solid #ffffff12;
+    background: #ffffff09;
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    transition: border-color .2s;
+}
+
+.upgrade-card:hover {
+    border-color: #ffc94f70;
+}
+
+.upgrade-top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 13px;
+}
+
+.upgrade-icon {
+    background: #ffffff12;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    font-size: 21px;
+    flex-shrink: 0;
+}
+
+.upgrade-name {
+    font-size: 14px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
+
+.upgrade-category {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.upgrade-description {
+    color: #c3c8df;
+    font-size: 12px;
+    margin-bottom: 13px;
+    line-height: 1.5;
+}
+
+.upgrade-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.upgrade-price {
+    color: var(--gold);
+    font-weight: 900;
+    font-size: 12px;
+}
+
+.empty-upgrades {
+    grid-column: 1 / -1;
+    background: #ffffff08;
+    padding: 35px 20px;
+    text-align: center;
+    border: 1px dashed #ffffff25;
+    border-radius: 16px;
+    color: var(--muted);
+}
+
+.empty-upgrades strong {
+    display: block;
+    color: white;
+    font-size: 17px;
+    margin-bottom: 5px;
 }
 
 .save-status {
     text-align: center;
-    margin-top: 22px;
-    color: #83d5a5;
+    color: var(--green);
     font-size: 12px;
+    margin-top: 24px;
 }
 
-@media(max-width: 760px) {
-    .game-layout {
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%, 100px);
+    opacity: 0;
+    background: #272b45;
+    color: var(--gold-light);
+    border: 1px solid #ffc94f66;
+    border-radius: 14px;
+    padding: 13px 20px;
+    font-weight: 900;
+    text-align: center;
+    z-index: 10;
+    width: max-content;
+    max-width: 90%;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+@media(max-width: 850px) {
+    .main-grid {
         grid-template-columns: 1fr;
     }
 
-    .coin-stage {
-        height: 310px;
+    .building-list {
+        max-height: 460px;
     }
 }
 
-@media(max-width: 480px) {
+@media(max-width: 550px) {
     header {
         padding: 15px;
     }
@@ -419,19 +602,41 @@ header {
     }
 
     .container {
-        padding: 27px 13px;
+        padding: 25px 13px 45px;
     }
 
     .panel {
-        padding: 18px;
+        padding: 16px;
+    }
+
+    .top-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .top-stats .stat-card:first-child {
+        grid-column: 1 / -1;
     }
 
     .coin-stage {
-        height: 285px;
+        height: 290px;
     }
 
     .coin-fallback {
-        font-size: 140px;
+        font-size: 145px;
+    }
+
+    .upgrade-list {
+        grid-template-columns: 1fr;
+    }
+
+    .building {
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .buy-button {
+        min-width: 82px;
+        padding: 9px 7px;
     }
 }
 </style>
@@ -440,81 +645,88 @@ header {
 <body>
 
 <header>
-    <a class="back-link" href="../">← Arcade</a>
-
+    <a href="../">← Arcade</a>
     <div class="header-title">🪙 Neegy Clicker</div>
-
-    <button class="reset-button" id="resetButton">
-        Reset
-    </button>
+    <button class="reset-button" id="resetButton">Reset</button>
 </header>
 
 <main class="container">
 
     <section class="intro">
         <h1>Neegy Clicker</h1>
-        <p>Click Neegy. Make Neegies. Become unstoppable.</p>
+        <p>Click Neegy. Build your empire. Become ridiculously rich.</p>
     </section>
 
-    <div class="game-layout">
+    <!-- MAIN STATISTICS -->
 
-        <!-- CLICKING AREA -->
+    <section class="top-stats">
+
+        <div class="stat-card">
+            <span>Total Neegies</span>
+            <strong id="balance">0</strong>
+        </div>
+
+        <div class="stat-card">
+            <span>Neegies per second</span>
+            <strong id="production">0</strong>
+        </div>
+
+        <div class="stat-card">
+            <span>Neegies per click</span>
+            <strong id="clickPower">1</strong>
+        </div>
+
+    </section>
+
+    <div class="main-grid">
+
+        <!-- CLICK AREA -->
+
         <section class="panel">
 
             <div class="balance-section">
-
-                <div class="balance-label">
-                    Your Neegies
-                </div>
-
-                <div class="balance" id="balance">
-                    0
-                </div>
-
-                <div class="rate">
-                    <span id="clickRate">1</span>
-                    per click
+                <div class="balance-label">Your Neegy collection</div>
+                <div class="balance" id="largeBalance">0</div>
+                <div class="balance-rate">
+                    <span id="clickDisplay">1</span> per click
                     ·
-                    <span id="passiveRate">0</span>
-                    per second
+                    <span id="rateDisplay">0</span> per second
                 </div>
-
             </div>
 
             <div class="coin-stage" id="coinStage">
 
                 <div class="sparkle-layer" id="sparkleLayer"></div>
-
                 <div class="floating-layer" id="floatingLayer"></div>
 
-                <button class="coin-button" id="coinButton" aria-label="Click Neegy to earn Neegies">
-
+                <button
+                    class="coin-button"
+                    id="coinButton"
+                    aria-label="Click Neegy to earn Neegies"
+                >
                     <img
                         src="../neegy-coin.png"
-                        alt="Golden Neegy coin"
+                        alt="Neegy coin"
                         id="coinImage"
                     >
 
-                    <span class="coin-fallback" id="coinFallback">
-                        🪙
-                    </span>
-
+                    <span class="coin-fallback" id="coinFallback">🪙</span>
                 </button>
 
             </div>
 
             <div class="click-instruction">
-                ✨ Click Neegy to earn coins! ✨
+                ✨ CLICK NEGY TO COLLECT NEegies ✨
             </div>
 
-            <div class="stats">
+            <div class="click-stats">
 
-                <div class="stat">
+                <div class="mini-stat">
                     <strong id="totalClicks">0</strong>
-                    <span>Total Clicks</span>
+                    <span>Total clicks</span>
                 </div>
 
-                <div class="stat">
+                <div class="mini-stat">
                     <strong id="totalEarned">0</strong>
                     <span>Lifetime Neegies</span>
                 </div>
@@ -523,108 +735,45 @@ header {
 
         </section>
 
-        <!-- UPGRADES -->
+        <!-- BUILDING STORE -->
+
         <section class="panel">
 
-            <div class="upgrades-heading">
-                <h2>🛒 Upgrades</h2>
-                <span>⬆️</span>
+            <div class="panel-heading">
+                <h2>🏭 Producers</h2>
+                <span class="small-label">Buy more to earn more</span>
             </div>
 
-            <!-- UPGRADE 1 -->
-            <div class="upgrade">
-
-                <div class="upgrade-top">
-                    <div class="upgrade-icon">👆</div>
-
-                    <div>
-                        <div class="upgrade-name">
-                            Stronger Click
-                        </div>
-
-                        <div class="upgrade-description">
-                            Earn +1 Neegy per click.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="upgrade-bottom">
-                    <span class="level" id="clickLevel">
-                        Level 0
-                    </span>
-
-                    <button class="buy-button" id="buyClick">
-                        🪙 25
-                    </button>
-                </div>
-
-            </div>
-
-            <!-- UPGRADE 2 -->
-            <div class="upgrade">
-
-                <div class="upgrade-top">
-                    <div class="upgrade-icon">⚙️</div>
-
-                    <div>
-                        <div class="upgrade-name">
-                            Neegy Factory
-                        </div>
-
-                        <div class="upgrade-description">
-                            Automatically earn +10 per second.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="upgrade-bottom">
-                    <span class="level" id="autoLevel">
-                        Level 0
-                    </span>
-
-                    <button class="buy-button" id="buyAuto">
-                        🪙 100
-                    </button>
-                </div>
-
-            </div>
-
-            <!-- UPGRADE 3 -->
-            <div class="upgrade">
-
-                <div class="upgrade-top">
-                    <div class="upgrade-icon">💪</div>
-
-                    <div>
-                        <div class="upgrade-name">
-                            Golden Strength
-                        </div>
-
-                        <div class="upgrade-description">
-                            Earn +5 Neegies per click.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="upgrade-bottom">
-                    <span class="level" id="megaLevel">
-                        Level 0
-                    </span>
-
-                    <button class="buy-button" id="buyMega">
-                        🪙 180
-                    </button>
-                </div>
-
-            </div>
-
-            <div class="upgrade-note">
-                Upgrade prices increase with each purchase!
-            </div>
+            <div class="building-list" id="buildingList"></div>
 
         </section>
 
     </div>
+
+    <!-- UPGRADE STORE -->
+
+    <section class="panel upgrade-panel">
+
+        <div class="upgrade-header">
+            <h2>⬆️ Upgrades</h2>
+
+            <select id="upgradeFilter" class="upgrade-filter">
+                <option value="all">All producers</option>
+            </select>
+        </div>
+
+        <div class="upgrade-progress">
+            <span id="upgradeCount">0 / 150 upgrades purchased</span>
+            <span id="availableCount">0 available</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="upgradeProgress" style="width:0%"></div>
+        </div>
+
+        <div class="upgrade-list" id="upgradeList"></div>
+
+    </section>
 
     <div class="save-status" id="saveStatus">
         💾 Progress saves automatically on this device.
@@ -634,236 +783,902 @@ header {
 
 <div class="toast" id="toast"></div>
 
+
 <script>
 
-// ==========================================
-//  NEegy CLICKER - GAME SETTINGS
-// ==========================================
+// ==================================================
+// NEegy CLICKER - MAIN SETTINGS
+// ==================================================
 
-// These values can easily be changed later.
+// The 15 regular building upgrade tiers.
+// Each tier doubles the producer's output.
 
-const SETTINGS = {
-    startingClick: 1,
+const TIER_UNLOCKS = [
+    1, 5, 25, 50, 100,
+    150, 200, 250, 300, 350,
+    400, 450, 500, 550, 600
+];
 
-    clickUpgradeIncrease: 1,
-    clickUpgradeStartingCost: 25,
-    clickUpgradeMultiplier: 1.55,
+const TIER_PRICE_MULTIPLIERS = [
+    10,
+    50,
+    500,
+    50000,
+    5000000,
+    500000000,
+    500000000000,
+    500000000000000,
+    500000000000000000,
+    500000000000000000000,
+    5000000000000000000000000,
+    5000000000000000000000000000,
+    5000000000000000000000000000000,
+    5000000000000000000000000000000000,
+    5000000000000000000000000000000000000
+];
 
-    autoUpgradeIncrease: 10,
-    autoUpgradeStartingCost: 100,
-    autoUpgradeMultiplier: 1.65,
+const BUILDING_PRICE_MULTIPLIER = 1.15;
 
-    megaUpgradeIncrease: 5,
-    megaUpgradeStartingCost: 180,
-    megaUpgradeMultiplier: 1.7
-};
-
-const SAVE_KEY = "neegyClickerSave_v1";
+const SAVE_KEY = "neegyClickerSave_v2";
+const OLD_SAVE_KEY = "neegyClickerSave_v1";
 
 
-// ==========================================
-//  GAME DATA
-// ==========================================
+// ==================================================
+// THE 150 ORIGINAL NEegy UPGRADES
+// ==================================================
+
+const BUILDINGS = [
+
+    {
+        id: "finger",
+        name: "Finger Buddy",
+        icon: "👆",
+        baseCost: 15,
+        baseRate: 0.1,
+        description: "Your very own professional clicker.",
+
+        upgrades: [
+            "Neegy-polished fingertips",
+            "Double-jointed dedication",
+            "Thumbs-up certification",
+            "The index of power",
+            "Clicktopus training",
+            "Mouse-grip mastery",
+            "Finger-pocalypse",
+            "Knuckle-sandwich protocol",
+            "The Neegy tap-dance",
+            "Industrial-strength fingertips",
+            "Hyperclick diploma",
+            "Eight-finger discount",
+            "The royal point",
+            "Mega-mitten engineering",
+            "The infinite index"
+        ]
+    },
+
+    {
+        id: "grandma",
+        name: "Neegy Grandma",
+        icon: "👵",
+        baseCost: 100,
+        baseRate: 1,
+        description: "Grandma knows exactly what to do.",
+
+        upgrades: [
+            "Nan's secret Neegy stash",
+            "Emergency knitting circle",
+            "The bottomless handbag",
+            "Grandma's lucky slippers",
+            "Knit happens",
+            "The casserole conspiracy",
+            "Advanced cardigan theory",
+            "Family group-chat network",
+            "Powered rocking chair",
+            "Bingo night overtime",
+            "Yarn reserve of destiny",
+            "Generational Neegy wisdom",
+            "The suspicious fruit bowl",
+            "Ultra-soft slipper science",
+            "Grandma Prime"
+        ]
+    },
+
+    {
+        id: "farm",
+        name: "Neegy Farm",
+        icon: "🌾",
+        baseCost: 1100,
+        baseRate: 8,
+        description: "Grow Neegies in the countryside.",
+
+        upgrades: [
+            "Neegy seeds of doubt",
+            "Overqualified scarecrow",
+            "Questionable watering can",
+            "Photosynthesis with benefits",
+            "The sprinkler choir",
+            "Compost of champions",
+            "Aggressively organic soil",
+            "The tractor has feelings",
+            "Neegy circles",
+            "The suspicious fertilizer",
+            "Harvest moon boots",
+            "Mega-barn doors",
+            "Intercontinental irrigation",
+            "The endless field",
+            "Farmer of the year"
+        ]
+    },
+
+    {
+        id: "mine",
+        name: "Neegy Mine",
+        icon: "⛏️",
+        baseCost: 12000,
+        baseRate: 47,
+        description: "Dig deep. Find more Neegies.",
+
+        upgrades: [
+            "Neegy noseplugs",
+            "Bigger pick, bigger dreams",
+            "Underground snack break",
+            "The suspicious canary",
+            "Geologist's lucky socks",
+            "Diamond-ish enthusiasm",
+            "Deeper is better",
+            "Helmet-hair insurance",
+            "Mining with style",
+            "Neegycore drill bit",
+            "Subterranean turbo",
+            "Rock collection addiction",
+            "The bottomless shaft",
+            "Earth's secret pantry",
+            "Planet cracker's permit"
+        ]
+    },
+
+    {
+        id: "factory",
+        name: "Neegy Factory",
+        icon: "🏭",
+        baseCost: 130000,
+        baseRate: 260,
+        description: "Mass-produce Neegies at scale.",
+
+        upgrades: [
+            "One mildly useful conveyor",
+            "Neegy safety goggles",
+            "The squeaky assembly line",
+            "Unionized robot arms",
+            "Factory-floor tap shoes",
+            "The infinite lunch break",
+            "Industrial-strength glue",
+            "Overclocked lunch bell",
+            "Quality-control goblin",
+            "Pneumatic whoopee cushion",
+            "Turbo conveyor belts",
+            "Unsupervised robots",
+            "Mega assembly line",
+            "Factory of questionable ideas",
+            "Neegy production singularity"
+        ]
+    },
+
+    {
+        id: "bank",
+        name: "Neegy Bank",
+        icon: "🏦",
+        baseCost: 1400000,
+        baseRate: 1400,
+        description: "Make your money make more money.",
+
+        upgrades: [
+            "Piggy bank's big sibling",
+            "Neegy interest rates",
+            "Suspiciously shiny coins",
+            "Compound interest? COMPOUNDED.",
+            "The money printer's intern",
+            "Vault with a velvet rope",
+            "Accountant's lucky calculator",
+            "The billionaire beanbag",
+            "Neegy-backed securities",
+            "A very big ledger",
+            "Interest on interest on interest",
+            "The golden abacus",
+            "Offshore lemonade stand",
+            "The vault is sentient",
+            "Bank of Infinite Neegies"
+        ]
+    },
+
+    {
+        id: "temple",
+        name: "Neegy Temple",
+        icon: "🏛️",
+        baseCost: 20000000,
+        baseRate: 7800,
+        description: "An entire temple dedicated to Neegy.",
+
+        upgrades: [
+            "Neegy prayer candles",
+            "Extremely generous offering",
+            "Blessed calculators",
+            "The ceremonial coin purse",
+            "Monks of the click",
+            "The sacred snack table",
+            "Hymns for high yields",
+            "Blessing of the balance",
+            "Temple of the golden tap",
+            "Divine interest rates",
+            "The holy receipt printer",
+            "Choir of tiny bells",
+            "The seventh golden statue",
+            "Neegy enlightenment class",
+            "The almighty coin altar"
+        ]
+    },
+
+    {
+        id: "wizard",
+        name: "Neegy Wizard Tower",
+        icon: "🧙",
+        baseCost: 330000000,
+        baseRate: 44000,
+        description: "Magically produce enormous amounts of Neegy.",
+
+        upgrades: [
+            "Neegy spellbook for beginners",
+            "A hat that knows things",
+            "Wand with Wi-Fi",
+            "Abraca-Neegy",
+            "Potion of extra pockets",
+            "The spell-check sorcerer",
+            "Enchanted calculator",
+            "Wizard's emergency lunch",
+            "The crystal ball accountant",
+            "Double the trouble, double the Neegy",
+            "The tower's secret elevator",
+            "Arcane accounting",
+            "A familiar with a day job",
+            "The infinite spell slot",
+            "Grand wizard of Neegies"
+        ]
+    },
+
+    {
+        id: "shipment",
+        name: "Neegy Rocket",
+        icon: "🚀",
+        baseCost: 5100000000,
+        baseRate: 260000,
+        description: "Ship Neegies across the universe.",
+
+        upgrades: [
+            "Neegy in a box",
+            "Express pigeon service",
+            "Rocket-powered postage",
+            "Bubble-wrap fortress",
+            "The interstellar courier",
+            "Package-tracking crystal",
+            "A suspiciously fast parcel",
+            "Neegy customs loophole",
+            "Faster than a falling star",
+            "The cosmic shipping label",
+            "Zero-gravity packing peanuts",
+            "Turbo delivery thrusters",
+            "Wormhole express lane",
+            "The galaxy's postmaster",
+            "Same-day universe delivery"
+        ]
+    },
+
+    {
+        id: "alchemy",
+        name: "Neegy Lab",
+        icon: "🧪",
+        baseCost: 75000000000,
+        baseRate: 1600000,
+        description: "Scientific breakthroughs. Questionable methods.",
+
+        upgrades: [
+            "Neegy beaker buddies",
+            "Suspicious purple liquid",
+            "Lead into... something",
+            "The very shiny stirring rod",
+            "Lab coat with extra pockets",
+            "Transmutation for beginners",
+            "The philosopher's lunchbox",
+            "Quantum measuring spoon",
+            "Mysterious fumes insurance",
+            "Gold-plated test tubes",
+            "The alchemist's tax return",
+            "Reality's instruction manual",
+            "The endless bubbling flask",
+            "Matter-of-fact transmutation",
+            "The Neegy-making machine"
+        ]
+    }
+
+];
+
+
+// ==================================================
+// GENERATE ALL 150 UPGRADES
+// ==================================================
+
+const UPGRADES = [];
+
+BUILDINGS.forEach(building => {
+
+    building.upgrades.forEach((name, index) => {
+
+        UPGRADES.push({
+
+            id: building.id + "-" + (index + 1),
+
+            buildingId: building.id,
+
+            name: name,
+
+            tier: index + 1,
+
+            unlockAt: TIER_UNLOCKS[index],
+
+            cost: Math.ceil(
+                building.baseCost *
+                TIER_PRICE_MULTIPLIERS[index]
+            )
+
+        });
+
+    });
+
+});
+
+
+// ==================================================
+// SAVE DATA
+// ==================================================
 
 function defaultData() {
+
+    const buildingCounts = {};
+
+    BUILDINGS.forEach(building => {
+        buildingCounts[building.id] = 0;
+    });
+
     return {
+
         balance: 0,
-        lifetimeEarned: 0,
+        totalEarned: 0,
         totalClicks: 0,
 
-        clickUpgrades: 0,
-        autoUpgrades: 0,
-        megaUpgrades: 0,
+        buildings: buildingCounts,
+
+        boughtUpgrades: [],
 
         milestones: []
+
     };
+
 }
 
 let data = defaultData();
 
 
-// ==========================================
-//  LOAD SAVED PROGRESS
-// ==========================================
+// ==================================================
+// LOAD GAME
+// ==================================================
 
 function loadGame() {
-    try {
-        const saved = localStorage.getItem(SAVE_KEY);
 
-        if (saved) {
-            const parsed = JSON.parse(saved);
+    try {
+
+        const newSave = localStorage.getItem(SAVE_KEY);
+
+        if (newSave) {
+
+            const saved = JSON.parse(newSave);
 
             data = {
                 ...defaultData(),
-                ...parsed
+                ...saved,
+
+                buildings: {
+                    ...defaultData().buildings,
+                    ...(saved.buildings || {})
+                }
             };
 
-            // Keep saved values safe and valid.
-            for (const key of [
-                "balance",
-                "lifetimeEarned",
-                "totalClicks",
-                "clickUpgrades",
-                "autoUpgrades",
-                "megaUpgrades"
-            ]) {
-                const value = Number(data[key]);
+            data.boughtUpgrades =
+                Array.isArray(saved.boughtUpgrades)
+                    ? saved.boughtUpgrades
+                    : [];
 
-                data[key] = Number.isFinite(value)
-                    ? Math.max(0, value)
-                    : 0;
-            }
+            data.milestones =
+                Array.isArray(saved.milestones)
+                    ? saved.milestones
+                    : [];
 
-            if (!Array.isArray(data.milestones)) {
-                data.milestones = [];
-            }
         }
-    } catch (error) {
-        console.error("Could not load saved game:", error);
-        data = defaultData();
+
+        else {
+
+            // Preserve the balance from the previous version.
+
+            const oldSave = localStorage.getItem(OLD_SAVE_KEY);
+
+            if (oldSave) {
+
+                const old = JSON.parse(oldSave);
+
+                data.balance = Math.max(0, Number(old.balance) || 0);
+                data.totalEarned = Math.max(
+                    data.balance,
+                    Number(old.lifetimeEarned) || 0
+                );
+
+                data.totalClicks = Math.max(
+                    0,
+                    Number(old.totalClicks) || 0
+                );
+
+            }
+
+        }
+
     }
+
+    catch (error) {
+
+        console.error("Could not load Neegy Clicker:", error);
+
+        data = defaultData();
+
+    }
+
 }
+
+
+// ==================================================
+// SAVE GAME
+// ==================================================
 
 function saveGame() {
+
     try {
+
         localStorage.setItem(SAVE_KEY, JSON.stringify(data));
-    } catch (error) {
-        console.error("Could not save game:", error);
 
         document.getElementById("saveStatus").textContent =
-            "⚠️ Saving is unavailable in this browser.";
+            "💾 Progress saved automatically on this device.";
+
     }
+
+    catch (error) {
+
+        console.error("Could not save Neegy Clicker:", error);
+
+        document.getElementById("saveStatus").textContent =
+            "⚠️ Browser storage is unavailable.";
+
+    }
+
 }
 
 
-// ==========================================
-//  GAME CALCULATIONS
-// ==========================================
-
-function getClickPower() {
-    return SETTINGS.startingClick
-        + data.clickUpgrades * SETTINGS.clickUpgradeIncrease
-        + data.megaUpgrades * SETTINGS.megaUpgradeIncrease;
-}
-
-function getPassiveIncome() {
-    return data.autoUpgrades * SETTINGS.autoUpgradeIncrease;
-}
-
-function getUpgradeCost(type) {
-    if (type === "click") {
-        return Math.floor(
-            SETTINGS.clickUpgradeStartingCost *
-            Math.pow(SETTINGS.clickUpgradeMultiplier, data.clickUpgrades)
-        );
-    }
-
-    if (type === "auto") {
-        return Math.floor(
-            SETTINGS.autoUpgradeStartingCost *
-            Math.pow(SETTINGS.autoUpgradeMultiplier, data.autoUpgrades)
-        );
-    }
-
-    if (type === "mega") {
-        return Math.floor(
-            SETTINGS.megaUpgradeStartingCost *
-            Math.pow(SETTINGS.megaUpgradeMultiplier, data.megaUpgrades)
-        );
-    }
-
-    return 0;
-}
-
-
-// ==========================================
-//  DISPLAY FORMATTING
-// ==========================================
+// ==================================================
+// NUMBER FORMATTING
+// ==================================================
 
 function formatNumber(number) {
-    const value = Math.floor(number);
 
-    return value.toLocaleString("en-US");
+    if (!Number.isFinite(number)) {
+        return "∞";
+    }
+
+    return new Intl.NumberFormat("en-US", {
+        notation: "compact",
+        maximumFractionDigits: 2
+    }).format(number);
+
+}
+
+function formatPrice(number) {
+    return formatNumber(number);
 }
 
 
-// ==========================================
-//  UPDATE THE GAME INTERFACE
-// ==========================================
+// ==================================================
+// BUILDING CALCULATIONS
+// ==================================================
 
-function render() {
+function getBuilding(id) {
+
+    return BUILDINGS.find(building => building.id === id);
+
+}
+
+function getOwned(id) {
+
+    return Number(data.buildings[id]) || 0;
+
+}
+
+function getBuildingPrice(building) {
+
+    const amountOwned = getOwned(building.id);
+
+    return Math.ceil(
+        building.baseCost *
+        Math.pow(BUILDING_PRICE_MULTIPLIER, amountOwned)
+    );
+
+}
+
+function getBuildingUpgradeCount(buildingId) {
+
+    return data.boughtUpgrades.filter(id =>
+        id.startsWith(buildingId + "-")
+    ).length;
+
+}
+
+function getBuildingProduction(building) {
+
+    const owned = getOwned(building.id);
+
+    const upgrades = getBuildingUpgradeCount(building.id);
+
+    return owned * building.baseRate * Math.pow(2, upgrades);
+
+}
+
+function getTotalProduction() {
+
+    return BUILDINGS.reduce((total, building) => {
+
+        return total + getBuildingProduction(building);
+
+    }, 0);
+
+}
+
+
+// ==================================================
+// CLICK POWER
+// ==================================================
+
+function getClickPower() {
+
+    const fingers = getOwned("finger");
+
+    const fingerUpgrades = getBuildingUpgradeCount("finger");
+
+    return 1 + fingers + fingerUpgrades;
+
+}
+
+
+// ==================================================
+// UPGRADE AVAILABILITY
+// ==================================================
+
+function isUpgradeAvailable(upgrade) {
+
+    const owned = getOwned(upgrade.buildingId);
+
+    const alreadyBought = data.boughtUpgrades.includes(upgrade.id);
+
+    return owned >= upgrade.unlockAt && !alreadyBought;
+
+}
+
+function getAvailableUpgrades() {
+
+    return UPGRADES.filter(isUpgradeAvailable);
+
+}
+
+function getPurchasedCount() {
+
+    return data.boughtUpgrades.length;
+
+}
+
+
+// ==================================================
+// MAIN DISPLAY
+// ==================================================
+
+function renderStats() {
+
+    const production = getTotalProduction();
+    const clickPower = getClickPower();
 
     document.getElementById("balance").textContent =
         formatNumber(data.balance);
 
-    document.getElementById("clickRate").textContent =
-        formatNumber(getClickPower());
+    document.getElementById("largeBalance").textContent =
+        formatNumber(data.balance);
 
-    document.getElementById("passiveRate").textContent =
-        formatNumber(getPassiveIncome());
+    document.getElementById("production").textContent =
+        formatNumber(production);
+
+    document.getElementById("clickPower").textContent =
+        formatNumber(clickPower);
+
+    document.getElementById("clickDisplay").textContent =
+        formatNumber(clickPower);
+
+    document.getElementById("rateDisplay").textContent =
+        formatNumber(production);
 
     document.getElementById("totalClicks").textContent =
         formatNumber(data.totalClicks);
 
     document.getElementById("totalEarned").textContent =
-        formatNumber(data.lifetimeEarned);
+        formatNumber(data.totalEarned);
 
-
-    // Upgrade levels
-
-    document.getElementById("clickLevel").textContent =
-        "Level " + data.clickUpgrades;
-
-    document.getElementById("autoLevel").textContent =
-        "Level " + data.autoUpgrades;
-
-    document.getElementById("megaLevel").textContent =
-        "Level " + data.megaUpgrades;
-
-
-    // Upgrade prices
-
-    document.getElementById("buyClick").textContent =
-        "🪙 " + formatNumber(getUpgradeCost("click"));
-
-    document.getElementById("buyAuto").textContent =
-        "🪙 " + formatNumber(getUpgradeCost("auto"));
-
-    document.getElementById("buyMega").textContent =
-        "🪙 " + formatNumber(getUpgradeCost("mega"));
-
-
-    // Disable purchases if you cannot afford them.
-
-    document.getElementById("buyClick").disabled =
-        data.balance < getUpgradeCost("click");
-
-    document.getElementById("buyAuto").disabled =
-        data.balance < getUpgradeCost("auto");
-
-    document.getElementById("buyMega").disabled =
-        data.balance < getUpgradeCost("mega");
 }
 
 
-// ==========================================
-//  EARNING NEegies
-// ==========================================
+// ==================================================
+// BUILDING STORE DISPLAY
+// ==================================================
+
+function renderBuildings() {
+
+    const list = document.getElementById("buildingList");
+
+    list.innerHTML = "";
+
+    BUILDINGS.forEach(building => {
+
+        const owned = getOwned(building.id);
+        const price = getBuildingPrice(building);
+        const production = getBuildingProduction(building);
+
+        const affordable = data.balance >= price;
+
+        const card = document.createElement("div");
+
+        card.className = "building";
+
+        card.innerHTML = `
+
+            <div class="building-icon">
+                ${building.icon}
+            </div>
+
+            <div class="building-info">
+
+                <h3>${building.name}</h3>
+
+                <p>
+                    ${formatNumber(production)} Neegies/s
+                    · ${owned} owned
+                </p>
+
+            </div>
+
+            <div class="building-count">
+                ×${formatNumber(owned)}
+            </div>
+
+            <button
+                class="buy-button"
+                ${affordable ? "" : "disabled"}
+            >
+                🪙 ${formatPrice(price)}
+            </button>
+
+        `;
+
+        card.querySelector("button").addEventListener("click", () => {
+
+            buyBuilding(building.id);
+
+        });
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+// ==================================================
+// UPGRADE FILTER
+// ==================================================
+
+function setupUpgradeFilter() {
+
+    const filter = document.getElementById("upgradeFilter");
+
+    BUILDINGS.forEach(building => {
+
+        const option = document.createElement("option");
+
+        option.value = building.id;
+        option.textContent = building.icon + " " + building.name;
+
+        filter.appendChild(option);
+
+    });
+
+    filter.addEventListener("change", renderUpgrades);
+
+}
+
+
+// ==================================================
+// UPGRADE STORE DISPLAY
+// ==================================================
+
+function renderUpgrades() {
+
+    const list = document.getElementById("upgradeList");
+
+    const filter = document.getElementById("upgradeFilter").value;
+
+    const available = getAvailableUpgrades();
+
+    const purchased = getPurchasedCount();
+
+    document.getElementById("upgradeCount").textContent =
+        purchased + " / 150 upgrades purchased";
+
+    document.getElementById("availableCount").textContent =
+        available.length + " available";
+
+    document.getElementById("upgradeProgress").style.width =
+        (purchased / 150 * 100) + "%";
+
+    list.innerHTML = "";
+
+    const visible = available.filter(upgrade => {
+
+        return filter === "all" ||
+            upgrade.buildingId === filter;
+
+    });
+
+    if (visible.length === 0) {
+
+        const empty = document.createElement("div");
+
+        empty.className = "empty-upgrades";
+
+        empty.innerHTML = `
+
+            <strong>🔒 Nothing to upgrade yet!</strong>
+
+            Purchase more producers to unlock their upgrades.
+            Your next upgrade will appear here when you meet its requirement.
+
+        `;
+
+        list.appendChild(empty);
+
+        return;
+
+    }
+
+    visible.forEach(upgrade => {
+
+        const building = getBuilding(upgrade.buildingId);
+
+        const affordable = data.balance >= upgrade.cost;
+
+        const description = building.id === "finger"
+            ? "Doubles Finger Buddy production and adds +1 Neegy per click."
+            : "Doubles " + building.name + " production.";
+
+        const card = document.createElement("div");
+
+        card.className = "upgrade-card";
+
+        card.innerHTML = `
+
+            <div>
+
+                <div class="upgrade-top">
+
+                    <div class="upgrade-icon">
+                        ${building.icon}
+                    </div>
+
+                    <div>
+
+                        <div class="upgrade-name">
+                            ${upgrade.name}
+                        </div>
+
+                        <div class="upgrade-category">
+                            ${building.name} · Tier ${upgrade.tier}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="upgrade-description">
+                    ${description}
+                    <br>
+                    Unlock requirement: ${formatNumber(upgrade.unlockAt)} owned.
+                </div>
+
+            </div>
+
+            <div class="upgrade-bottom">
+
+                <span class="upgrade-price">
+                    🪙 ${formatPrice(upgrade.cost)}
+                </span>
+
+                <button
+                    class="buy-button"
+                    ${affordable ? "" : "disabled"}
+                >
+                    BUY
+                </button>
+
+            </div>
+
+        `;
+
+        card.querySelector("button").addEventListener("click", () => {
+
+            buyUpgrade(upgrade.id);
+
+        });
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+// ==================================================
+// REFRESH EVERYTHING
+// ==================================================
+
+function render() {
+
+    renderStats();
+
+    renderBuildings();
+
+    renderUpgrades();
+
+}
+
+
+// ==================================================
+// EARN NEegies
+// ==================================================
 
 function earnNeegies(amount) {
 
-    data.balance += amount;
-    data.lifetimeEarned += amount;
+    if (!Number.isFinite(amount) || amount <= 0) {
+        return;
+    }
 
-    render();
+    data.balance += amount;
+
+    data.totalEarned += amount;
 
     checkMilestones();
+
 }
 
 
-// ==========================================
-//  CLICKING NEegy
-// ==========================================
+// ==================================================
+// CLICK NEegy
+// ==================================================
 
 const coinButton = document.getElementById("coinButton");
 
@@ -875,7 +1690,7 @@ coinButton.addEventListener("click", function() {
 
     earnNeegies(amount);
 
-    // Restart the coin animation on every click.
+    // Restart the pop animation.
 
     coinButton.classList.remove("pop");
 
@@ -883,87 +1698,103 @@ coinButton.addEventListener("click", function() {
 
     coinButton.classList.add("pop");
 
-
-    // Floating reward text.
-
     showFloatingText("+" + formatNumber(amount));
-
-
-    // Sparkle burst!
 
     sparkleBurst(7);
 
-    saveGame();
+    render();
 
 });
 
 
-// ==========================================
-//  BUY UPGRADES
-// ==========================================
+// ==================================================
+// BUY A BUILDING
+// ==================================================
 
-function buyUpgrade(type) {
+function buyBuilding(id) {
 
-    const cost = getUpgradeCost(type);
+    const building = getBuilding(id);
 
-    if (data.balance < cost) {
+    const price = getBuildingPrice(building);
+
+    if (data.balance < price) {
         return;
     }
 
-    data.balance -= cost;
+    data.balance -= price;
 
-    if (type === "click") {
-        data.clickUpgrades++;
-        showToast("👆 Stronger clicks unlocked!");
-    }
+    data.buildings[id]++;
 
-    else if (type === "auto") {
-        data.autoUpgrades++;
-        showToast("⚙️ Your Neegy Factory is working!");
-    }
+    showToast("🎉 Purchased " + building.name + "!");
 
-    else if (type === "mega") {
-        data.megaUpgrades++;
-        showToast("💪 Golden Strength upgraded!");
-    }
+    sparkleBurst(4);
 
     render();
+
     saveGame();
+
 }
 
-document.getElementById("buyClick").addEventListener("click", () => {
-    buyUpgrade("click");
-});
 
-document.getElementById("buyAuto").addEventListener("click", () => {
-    buyUpgrade("auto");
-});
+// ==================================================
+// BUY AN UPGRADE
+// ==================================================
 
-document.getElementById("buyMega").addEventListener("click", () => {
-    buyUpgrade("mega");
-});
+function buyUpgrade(id) {
+
+    const upgrade = UPGRADES.find(item => item.id === id);
+
+    if (!upgrade || !isUpgradeAvailable(upgrade)) {
+        return;
+    }
+
+    if (data.balance < upgrade.cost) {
+        return;
+    }
+
+    data.balance -= upgrade.cost;
+
+    data.boughtUpgrades.push(upgrade.id);
+
+    showToast("✨ Upgrade purchased: " + upgrade.name);
+
+    sparkleBurst(9);
+
+    render();
+
+    saveGame();
+
+}
 
 
-// ==========================================
-//  AUTOMATIC INCOME
-// ==========================================
+// ==================================================
+// PASSIVE INCOME
+// ==================================================
 
-// Update four times per second for smooth income.
+// This runs exactly once every second.
+// It adds the full production amount in one update,
+// instead of adding small fractions every 250 milliseconds.
 
 setInterval(function() {
 
-    const income = getPassiveIncome();
+    const income = getTotalProduction();
 
     if (income > 0) {
-        earnNeegies(income / 4);
+
+        earnNeegies(income);
+
+        render();
+
+        saveGame();
+
     }
 
-}, 250);
+}, 1000);
 
 
-// ==========================================
-//  FLOATING REWARD TEXT
-// ==========================================
+// ==================================================
+// FLOATING REWARD TEXT
+// ==================================================
 
 function showFloatingText(text) {
 
@@ -972,73 +1803,71 @@ function showFloatingText(text) {
     const element = document.createElement("div");
 
     element.className = "floating-text";
+
     element.textContent = text;
 
-    element.style.left = (43 + Math.random() * 14) + "%";
-    element.style.top = (32 + Math.random() * 25) + "%";
+    element.style.left = (35 + Math.random() * 30) + "%";
+
+    element.style.top = (30 + Math.random() * 30) + "%";
 
     layer.appendChild(element);
 
-    setTimeout(() => {
-        element.remove();
-    }, 850);
+    setTimeout(() => element.remove(), 900);
+
 }
 
 
-// ==========================================
-//  SPARKLES
-// ==========================================
+// ==================================================
+// RANDOM GOLDEN SPARKLES
+// ==================================================
+
+const coinStage = document.getElementById("coinStage");
 
 const sparkleLayer = document.getElementById("sparkleLayer");
-const coinStage = document.getElementById("coinStage");
 
 function createSparkle() {
 
-    const rect = coinStage.getBoundingClientRect();
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
+    const width = coinStage.clientWidth;
+    const height = coinStage.clientHeight;
 
     const angle = Math.random() * Math.PI * 2;
 
-    const radius = Math.min(rect.width, rect.height) *
-        (0.39 + Math.random() * 0.09);
+    const radius = Math.min(width, height) *
+        (0.36 + Math.random() * 0.15);
 
-    const x = centerX + Math.cos(angle) * radius;
-    const y = centerY + Math.sin(angle) * radius;
+    const x = width / 2 + Math.cos(angle) * radius;
+    const y = height / 2 + Math.sin(angle) * radius;
 
     const star = document.createElement("span");
 
-    const symbols = ["✦", "✧", "⋆", "✶"];
+    const symbols = ["✦", "✧", "⋆", "✶", "✴"];
 
     star.className = "sparkle";
-    star.textContent = symbols[
-        Math.floor(Math.random() * symbols.length)
-    ];
+
+    star.textContent =
+        symbols[Math.floor(Math.random() * symbols.length)];
 
     star.style.left = x + "px";
+
     star.style.top = y + "px";
 
     star.style.fontSize = (12 + Math.random() * 17) + "px";
 
     sparkleLayer.appendChild(star);
 
-    setTimeout(() => {
-        star.remove();
-    }, 950);
+    setTimeout(() => star.remove(), 1000);
+
 }
 
 function sparkleBurst(amount) {
 
     for (let i = 0; i < amount; i++) {
-        setTimeout(() => {
-            createSparkle();
-        }, i * 45);
+
+        setTimeout(createSparkle, i * 40);
+
     }
+
 }
-
-
-// Random sparkles appear even when you're not clicking.
 
 function scheduleRandomSparkles() {
 
@@ -1055,29 +1884,31 @@ function scheduleRandomSparkles() {
         scheduleRandomSparkles();
 
     }, delay);
+
 }
 
 scheduleRandomSparkles();
 
 
-// ==========================================
-//  MILESTONES
-// ==========================================
+// ==================================================
+// MILESTONES
+// ==================================================
 
-const milestones = [
+const MILESTONES = [
     { amount: 100, message: "🎉 100 lifetime Neegies!" },
     { amount: 500, message: "⭐ 500 lifetime Neegies!" },
     { amount: 1000, message: "🏆 1,000 lifetime Neegies!" },
     { amount: 5000, message: "✨ 5,000 lifetime Neegies!" },
-    { amount: 10000, message: "👑 10,000 lifetime Neegies!" }
+    { amount: 10000, message: "👑 10,000 lifetime Neegies!" },
+    { amount: 100000, message: "🌟 100,000 lifetime Neegies!" }
 ];
 
 function checkMilestones() {
 
-    milestones.forEach(milestone => {
+    MILESTONES.forEach(milestone => {
 
         if (
-            data.lifetimeEarned >= milestone.amount &&
+            data.totalEarned >= milestone.amount &&
             !data.milestones.includes(milestone.amount)
         ) {
 
@@ -1087,16 +1918,16 @@ function checkMilestones() {
 
             sparkleBurst(12);
 
-            saveGame();
         }
 
     });
+
 }
 
 
-// ==========================================
-//  NOTIFICATIONS
-// ==========================================
+// ==================================================
+// TOAST NOTIFICATIONS
+// ==================================================
 
 let toastTimeout;
 
@@ -1111,19 +1942,22 @@ function showToast(message) {
     clearTimeout(toastTimeout);
 
     toastTimeout = setTimeout(() => {
+
         toast.classList.remove("show");
+
     }, 2400);
+
 }
 
 
-// ==========================================
-//  RESET GAME
-// ==========================================
+// ==================================================
+// RESET GAME
+// ==================================================
 
-document.getElementById("resetButton").addEventListener("click", function() {
+document.getElementById("resetButton").addEventListener("click", () => {
 
     const confirmed = confirm(
-        "Are you sure you want to reset all your Neegy Clicker progress?"
+        "Are you sure? This will delete all your Neegy Clicker progress."
     );
 
     if (!confirmed) {
@@ -1133,48 +1967,53 @@ document.getElementById("resetButton").addEventListener("click", function() {
     data = defaultData();
 
     saveGame();
+
     render();
 
-    sparkleBurst(12);
+    sparkleBurst(15);
 
-    showToast("🔄 Game progress reset!");
+    showToast("🔄 Neegy Clicker has been reset!");
 
 });
 
 
-// ==========================================
-//  AUTOMATIC SAVING
-// ==========================================
+// ==================================================
+// IMAGE FALLBACK
+// ==================================================
 
-// Save periodically.
+document.getElementById("coinImage").addEventListener("error", function() {
+
+    this.style.display = "none";
+
+    document.getElementById("coinFallback").style.display = "block";
+
+});
+
+
+// ==================================================
+// AUTOMATIC SAVING
+// ==================================================
 
 setInterval(saveGame, 2000);
 
-// Save when leaving the page.
-
 window.addEventListener("pagehide", saveGame);
 
-// Save when switching tabs.
-
 document.addEventListener("visibilitychange", function() {
+
     if (document.visibilityState === "hidden") {
         saveGame();
     }
+
 });
 
 
-// ==========================================
-//  START GAME
-// ==========================================
-
-const coinImage = document.getElementById("coinImage");
-
-coinImage.addEventListener("error", function() {
-    coinImage.style.display = "none";
-    document.getElementById("coinFallback").style.display = "block";
-});
+// ==================================================
+// START GAME
+// ==================================================
 
 loadGame();
+
+setupUpgradeFilter();
 
 render();
 
