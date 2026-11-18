@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101313">
+  <title>Games Admin — Muhammad Rayees</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #101313;
+      color: #f4f5f2;
+      font-family: Arial, sans-serif;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 420px;
+      background: #191e1e;
+      border: 1px solid #303a39;
+      border-radius: 18px;
+      padding: 32px;
+    }
+
+    .eyebrow {
+      color: #20b9b5;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 12px 0 8px;
+      font-size: 30px;
+    }
+
+    .description {
+      color: #929b98;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      font-size: 13px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 9px;
+      border: 1px solid #394443;
+      background: #101313;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #20b9b5;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: #20b9b5;
+      color: #071414;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #38ceca;
+    }
+
+    #message {
+      margin-top: 18px;
+      color: #ff9292;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .dashboard {
+      max-width: 900px;
+    }
+
+    .game-card {
+      padding: 20px;
+      margin-top: 16px;
+      border: 1px solid #303a39;
+      border-radius: 12px;
+      background: #202727;
+    }
+
+    .game-card p {
+      color: #929b98;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="panel" id="loginPanel">
+    <div class="eyebrow">Muhammad Rayees · Games</div>
+    <h1>Admin Login</h1>
+
+    <p class="description">
+      Sign in to manage your games, players and rewards.
+    </p>
+
+    <form id="loginForm">
+      <label for="username">Admin username</label>
+      <input id="username" autocomplete="username" required>
+
+      <label for="password">Main password</label>
+      <input id="password" type="password"
+        autocomplete="current-password" required>
+
+      <div id="secondPasswordArea" class="hidden">
+        <label for="secondPassword">Second password</label>
+        <input id="secondPassword" type="password"
+          autocomplete="off">
+      </div>
+
+      <button type="submit" id="loginButton">
+        Sign In
+      </button>
+
+      <div id="message" role="alert"></div>
+    </form>
+  </main>
+
+  <main class="panel dashboard hidden" id="dashboard">
+    <div class="eyebrow">Games Administration</div>
+    <h1>Dashboard</h1>
+
+    <p class="description">
+      Welcome to your central games control panel.
+    </p>
+
+    <div class="game-card">
+      <h2>Neegy Clicker</h2>
+      <p>Game management controls will appear here.</p>
+      <span>Coming soon</span>
+    </div>
+
+    <div class="game-card">
+      <h2>Player Management</h2>
+      <p>Manage accounts, permissions and player progress.</p>
+      <span>Coming soon</span>
+    </div>
+
+    <div class="game-card">
+      <h2>Redeem Codes</h2>
+      <p>Create and manage rewards across your games.</p>
+      <span>Coming soon</span>
+    </div>
+
+    <button id="logoutButton">Log Out</button>
+  </main>
+
+  <script>
+    const API = "https://rayees-games-api.muhammad-rayees11.workers.dev";
+
+    const loginPanel = document.getElementById("loginPanel");
+    const dashboard = document.getElementById("dashboard");
+    const message = document.getElementById("message");
+    const secondPasswordArea =
+      document.getElementById("secondPasswordArea");
+
+    let requiresSecondPassword = false;
+
+    async function checkLogin() {
+      try {
+        const response = await fetch(API + "/api/admin/me", {
+          credentials: "include"
+        });
+
+        const result = await response.json();
+
+        if (result.authenticated) {
+          showDashboard();
+        }
+      } catch {
+        message.textContent = "Could not connect to the server.";
+      }
+    }
+
+    function showDashboard() {
+      loginPanel.classList.add("hidden");
+      dashboard.classList.remove("hidden");
+    }
+
+    document.getElementById("loginForm").addEventListener(
+      "submit", async function(event) {
+        event.preventDefault();
+
+        const button = document.getElementById("loginButton");
+        button.disabled = true;
+        button.textContent = "Signing in...";
+        message.textContent = "";
+
+        const body = {
+          username: document.getElementById("username").value,
+          password: document.getElementById("password").value,
+          secondPassword:
+            document.getElementById("secondPassword").value
+        };
+
+        try {
+          const response = await fetch(API + "/api/admin/login", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            document.getElementById("loginForm").reset();
+            showDashboard();
+          } else {
+            requiresSecondPassword =
+              result.requiresSecondPassword === true;
+
+            secondPasswordArea.classList.toggle(
+              "hidden", !requiresSecondPassword
+            );
+
+            message.textContent =
+              result.error || "Login failed.";
+
+            if (result.locked) {
+              button.disabled = true;
+            }
+          }
+        } catch {
+          message.textContent =
+            "Could not connect to the server. Try again.";
+        }
+
+        if (!button.disabled) {
+          button.textContent = "Sign In";
+        }
+      }
+    );
+
+    document.getElementById("logoutButton").addEventListener(
+      "click", async function() {
+        try {
+          await fetch(API + "/api/admin/logout", {
+            method: "POST",
+            credentials: "include"
+          });
+        } finally {
+          dashboard.classList.add("hidden");
+          loginPanel.classList.remove("hidden");
+          document.getElementById("loginForm").reset();
+          secondPasswordArea.classList.add("hidden");
+          message.textContent = "";
+        }
+      }
+    );
+
+    checkLogin();
+  </script>
+
+</body>
+</html>
