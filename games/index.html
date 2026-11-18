@@ -1,11 +1,371 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the Arcade!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Welcome to the Arcade!</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root {
+    --background: #101426;
+    --surface: #1b2140;
+    --purple: #8968ff;
+    --blue: #42b9ff;
+    --text: #ffffff;
+    --muted: #a9b1d0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background:
+        radial-gradient(circle at 15% 15%, #35245c 0, transparent 32%),
+        radial-gradient(circle at 90% 70%, #173a5b 0, transparent 30%),
+        var(--background);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 7%;
+    border-bottom: 1px solid #ffffff12;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 900;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color .2s;
+}
+
+nav a:hover {
+    color: white;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 65px 25px;
+}
+
+.hero {
+    background: linear-gradient(120deg, #6947d5, #287bc5);
+    border-radius: 28px;
+    padding: 55px 45px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 55px;
+}
+
+.hero::after {
+    content: "🎮";
+    position: absolute;
+    right: 65px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-12deg);
+    font-size: 130px;
+    opacity: .85;
+}
+
+.hero-label {
+    background: #ffffff25;
+    padding: 7px 13px;
+    border-radius: 30px;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: clamp(34px, 6vw, 58px);
+    line-height: 1.1;
+    font-weight: 900;
+    max-width: 600px;
+}
+
+.hero p {
+    color: #e4e5ff;
+    margin-top: 15px;
+    font-size: 17px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.section-heading h2 {
+    font-size: 26px;
+}
+
+.game-count {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.game-card {
+    background: var(--surface);
+    border: 1px solid #ffffff12;
+    border-radius: 22px;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    transition: transform .25s, border-color .25s;
+}
+
+.game-card:not(.coming-soon):hover {
+    transform: translateY(-8px);
+    border-color: var(--purple);
+}
+
+.game-art {
+    height: 190px;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle, #3a2c62, #171b35);
+    overflow: hidden;
+}
+
+.game-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.game-emoji {
+    display: none;
+    font-size: 85px;
+}
+
+.game-info {
+    padding: 20px;
+}
+
+.game-info h3 {
+    font-size: 21px;
+    margin-bottom: 5px;
+}
+
+.game-info p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.tags {
+    display: flex;
+    gap: 7px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: #ffffff12;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.play-tag {
+    background: #6947d5;
+}
+
+.coming-soon {
+    opacity: .65;
+}
+
+.coming-soon .game-art {
+    font-size: 65px;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 35px 20px;
+    border-top: 1px solid #ffffff12;
+    font-size: 13px;
+}
+
+@media(max-width: 750px) {
+    .games-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero::after {
+        right: 20px;
+        font-size: 80px;
+        opacity: .35;
+    }
+}
+
+@media(max-width: 480px) {
+    header {
+        padding: 18px 20px;
+    }
+
+    nav {
+        gap: 12px;
+        font-size: 13px;
+    }
+
+    .container {
+        padding: 35px 17px;
+    }
+
+    .hero {
+        padding: 38px 25px;
+    }
+
+    .hero::after {
+        display: none;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
+
 <body>
-    <h1>Welcome to the Arcade!</h1>
+
+<header>
+    <div class="logo">🎮 The Arcade</div>
+
+    <nav>
+        <a href="./">Home</a>
+        <a href="#games">Games</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <div class="hero-label">YOUR GAMING HUB</div>
+
+        <h1>Welcome to the Arcade!</h1>
+
+        <p>
+            Pick a game. Jump in. Have fun.
+            Your next adventure starts here.
+        </p>
+    </section>
+
+    <section id="games">
+
+        <div class="section-heading">
+            <h2>🕹️ All Games</h2>
+            <span class="game-count">More games coming soon!</span>
+        </div>
+
+        <div class="games-grid">
+
+            <!-- NEegY CLICKER -->
+            <a href="neegy-clicker/" class="game-card">
+
+                <div class="game-art">
+                    <img
+                        src="neegy-coin.png"
+                        alt="Neegy Clicker"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
+                    >
+                    <div class="game-emoji">🪙</div>
+                </div>
+
+                <div class="game-info">
+                    <h3>Neegy Clicker</h3>
+
+                    <p>
+                        Click Neegy, earn coins,
+                        and buy upgrades!
+                    </p>
+
+                    <div class="tags">
+                        <span class="tag play-tag">▶ PLAY NOW</span>
+                        <span class="tag">Clicker</span>
+                    </div>
+                </div>
+
+            </a>
+
+            <!-- FUTURE GAME -->
+            <div class="game-card coming-soon">
+
+                <div class="game-art">🚀</div>
+
+                <div class="game-info">
+                    <h3>Coming Soon</h3>
+
+                    <p>
+                        Another game is on the way.
+                    </p>
+
+                    <div class="tags">
+                        <span class="tag">COMING SOON</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FUTURE GAME -->
+            <div class="game-card coming-soon">
+
+                <div class="game-art">🎲</div>
+
+                <div class="game-info">
+                    <h3>Coming Soon</h3>
+
+                    <p>
+                        Something fun is being built.
+                    </p>
+
+                    <div class="tags">
+                        <span class="tag">COMING SOON</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    Made for fun. More games coming soon! 🎮
+</footer>
+
 </body>
 </html>
