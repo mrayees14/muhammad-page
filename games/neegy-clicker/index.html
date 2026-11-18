@@ -1581,9 +1581,22 @@ function renderUpgrades() {
 
         const affordable = data.balance >= upgrade.cost;
 
-        const description = building.id === "finger"
-            ? "Doubles Finger Buddy production and adds +1 Neegy per click."
-            : "Doubles " + building.name + " production.";
+        const currentProduction = getBuildingProduction(building);
+const newProduction = currentProduction * 2;
+
+let description =
+    "Doubles " + building.name + " production from " +
+    formatNumber(currentProduction) + " to " +
+    formatNumber(newProduction) + " Neegies per second.";
+
+if (building.id === "finger") {
+    const currentClickPower = getClickPower();
+
+    description +=
+        " Also increases clicking power from " +
+        formatNumber(currentClickPower) + " to " +
+        formatNumber(currentClickPower + 1) + " Neegies per click.";
+}
 
         const card = document.createElement("div");
 
