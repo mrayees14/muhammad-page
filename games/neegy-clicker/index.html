@@ -1,0 +1,1186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Neegy Clicker</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+:root {
+    --background: #111426;
+    --surface: #1c2039;
+    --gold: #ffc94f;
+    --gold-light: #ffe69a;
+    --purple: #8b6aff;
+    --text: #ffffff;
+    --muted: #aeb3cd;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background:
+        radial-gradient(circle at 50% 20%, #34254e, transparent 45%),
+        var(--background);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 6%;
+    border-bottom: 1px solid #ffffff12;
+}
+
+.back-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.back-link:hover {
+    color: white;
+}
+
+.header-title {
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.reset-button {
+    border: 1px solid #ffffff20;
+    background: #ffffff0c;
+    color: var(--muted);
+    border-radius: 10px;
+    padding: 9px 13px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.reset-button:hover {
+    color: white;
+    background: #ffffff18;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 35px 22px 60px;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.intro h1 {
+    font-size: clamp(32px, 5vw, 46px);
+    font-weight: 900;
+}
+
+.intro p {
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+.game-layout {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 22px;
+    align-items: start;
+}
+
+.panel {
+    background: var(--surface);
+    border: 1px solid #ffffff12;
+    border-radius: 24px;
+    padding: 25px;
+}
+
+.balance-section {
+    text-align: center;
+}
+
+.balance-label {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.balance {
+    font-size: clamp(36px, 7vw, 58px);
+    font-weight: 900;
+    color: var(--gold);
+    margin: 5px 0;
+    text-shadow: 0 0 25px #ffc94f35;
+}
+
+.rate {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.coin-stage {
+    height: 350px;
+    max-width: 390px;
+    margin: 15px auto 5px;
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.coin-button {
+    position: relative;
+    z-index: 2;
+    width: min(275px, 78%);
+    aspect-ratio: 1;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: transform .12s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.coin-button img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    filter: drop-shadow(0 12px 20px #00000070);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.coin-fallback {
+    display: none;
+    font-size: 180px;
+    line-height: 1;
+    filter: drop-shadow(0 12px 20px #00000070);
+}
+
+.coin-button:active {
+    transform: translateY(-9px) scale(.96);
+}
+
+.coin-button.pop {
+    animation: coin-pop .25s ease;
+}
+
+@keyframes coin-pop {
+    0% { transform: translateY(0) scale(1); }
+    45% { transform: translateY(-12px) scale(.96); }
+    100% { transform: translateY(0) scale(1); }
+}
+
+.click-instruction {
+    color: var(--muted);
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.stat {
+    background: #ffffff09;
+    border-radius: 13px;
+    padding: 14px;
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    font-size: 22px;
+    color: var(--gold);
+}
+
+.stat span {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.upgrades-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.upgrades-heading h2 {
+    font-size: 23px;
+}
+
+.upgrade {
+    background: #ffffff09;
+    border: 1px solid #ffffff12;
+    border-radius: 17px;
+    padding: 17px;
+    margin-bottom: 13px;
+    transition: border-color .2s;
+}
+
+.upgrade:hover {
+    border-color: #ffc94f55;
+}
+
+.upgrade-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.upgrade-icon {
+    width: 47px;
+    height: 47px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+    background: #ffffff12;
+}
+
+.upgrade-name {
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.upgrade-description {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.upgrade-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.level {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.buy-button {
+    border: none;
+    background: linear-gradient(135deg, #ffd66c, #eea927);
+    color: #30200a;
+    border-radius: 10px;
+    padding: 10px 13px;
+    font-weight: 900;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform .15s, filter .15s;
+}
+
+.buy-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.buy-button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.upgrade-note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.sparkle-layer,
+.floating-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.sparkle {
+    position: absolute;
+    color: var(--gold-light);
+    font-size: 20px;
+    text-shadow: 0 0 15px #ffc94f;
+    animation: sparkle-anim .9s ease-out forwards;
+}
+
+@keyframes sparkle-anim {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.2) rotate(0deg);
+    }
+    30% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2) rotate(35deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.3) rotate(100deg);
+    }
+}
+
+.floating-text {
+    position: absolute;
+    color: var(--gold-light);
+    font-weight: 900;
+    font-size: 23px;
+    text-shadow: 0 2px 12px #000000;
+    animation: float-up .8s ease-out forwards;
+    white-space: nowrap;
+}
+
+@keyframes float-up {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0) scale(.7);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -10px) scale(1.1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -75px) scale(.9);
+    }
+}
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #282c43;
+    border: 1px solid #ffc94f55;
+    color: var(--gold-light);
+    padding: 13px 20px;
+    border-radius: 14px;
+    font-weight: 800;
+    z-index: 10;
+    opacity: 0;
+    transition: .3s;
+    pointer-events: none;
+    text-align: center;
+    width: max-content;
+    max-width: 90%;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.save-status {
+    text-align: center;
+    margin-top: 22px;
+    color: #83d5a5;
+    font-size: 12px;
+}
+
+@media(max-width: 760px) {
+    .game-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .coin-stage {
+        height: 310px;
+    }
+}
+
+@media(max-width: 480px) {
+    header {
+        padding: 15px;
+    }
+
+    .header-title {
+        font-size: 15px;
+    }
+
+    .container {
+        padding: 27px 13px;
+    }
+
+    .panel {
+        padding: 18px;
+    }
+
+    .coin-stage {
+        height: 285px;
+    }
+
+    .coin-fallback {
+        font-size: 140px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a class="back-link" href="../">← Arcade</a>
+
+    <div class="header-title">🪙 Neegy Clicker</div>
+
+    <button class="reset-button" id="resetButton">
+        Reset
+    </button>
+</header>
+
+<main class="container">
+
+    <section class="intro">
+        <h1>Neegy Clicker</h1>
+        <p>Click Neegy. Make Neegies. Become unstoppable.</p>
+    </section>
+
+    <div class="game-layout">
+
+        <!-- CLICKING AREA -->
+        <section class="panel">
+
+            <div class="balance-section">
+
+                <div class="balance-label">
+                    Your Neegies
+                </div>
+
+                <div class="balance" id="balance">
+                    0
+                </div>
+
+                <div class="rate">
+                    <span id="clickRate">1</span>
+                    per click
+                    ·
+                    <span id="passiveRate">0</span>
+                    per second
+                </div>
+
+            </div>
+
+            <div class="coin-stage" id="coinStage">
+
+                <div class="sparkle-layer" id="sparkleLayer"></div>
+
+                <div class="floating-layer" id="floatingLayer"></div>
+
+                <button class="coin-button" id="coinButton" aria-label="Click Neegy to earn Neegies">
+
+                    <img
+                        src="../neegy-coin.png"
+                        alt="Golden Neegy coin"
+                        id="coinImage"
+                    >
+
+                    <span class="coin-fallback" id="coinFallback">
+                        🪙
+                    </span>
+
+                </button>
+
+            </div>
+
+            <div class="click-instruction">
+                ✨ Click Neegy to earn coins! ✨
+            </div>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong id="totalClicks">0</strong>
+                    <span>Total Clicks</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="totalEarned">0</strong>
+                    <span>Lifetime Neegies</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- UPGRADES -->
+        <section class="panel">
+
+            <div class="upgrades-heading">
+                <h2>🛒 Upgrades</h2>
+                <span>⬆️</span>
+            </div>
+
+            <!-- UPGRADE 1 -->
+            <div class="upgrade">
+
+                <div class="upgrade-top">
+                    <div class="upgrade-icon">👆</div>
+
+                    <div>
+                        <div class="upgrade-name">
+                            Stronger Click
+                        </div>
+
+                        <div class="upgrade-description">
+                            Earn +1 Neegy per click.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="upgrade-bottom">
+                    <span class="level" id="clickLevel">
+                        Level 0
+                    </span>
+
+                    <button class="buy-button" id="buyClick">
+                        🪙 25
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- UPGRADE 2 -->
+            <div class="upgrade">
+
+                <div class="upgrade-top">
+                    <div class="upgrade-icon">⚙️</div>
+
+                    <div>
+                        <div class="upgrade-name">
+                            Neegy Factory
+                        </div>
+
+                        <div class="upgrade-description">
+                            Automatically earn +10 per second.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="upgrade-bottom">
+                    <span class="level" id="autoLevel">
+                        Level 0
+                    </span>
+
+                    <button class="buy-button" id="buyAuto">
+                        🪙 100
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- UPGRADE 3 -->
+            <div class="upgrade">
+
+                <div class="upgrade-top">
+                    <div class="upgrade-icon">💪</div>
+
+                    <div>
+                        <div class="upgrade-name">
+                            Golden Strength
+                        </div>
+
+                        <div class="upgrade-description">
+                            Earn +5 Neegies per click.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="upgrade-bottom">
+                    <span class="level" id="megaLevel">
+                        Level 0
+                    </span>
+
+                    <button class="buy-button" id="buyMega">
+                        🪙 180
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="upgrade-note">
+                Upgrade prices increase with each purchase!
+            </div>
+
+        </section>
+
+    </div>
+
+    <div class="save-status" id="saveStatus">
+        💾 Progress saves automatically on this device.
+    </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+// ==========================================
+//  NEegy CLICKER - GAME SETTINGS
+// ==========================================
+
+// These values can easily be changed later.
+
+const SETTINGS = {
+    startingClick: 1,
+
+    clickUpgradeIncrease: 1,
+    clickUpgradeStartingCost: 25,
+    clickUpgradeMultiplier: 1.55,
+
+    autoUpgradeIncrease: 10,
+    autoUpgradeStartingCost: 100,
+    autoUpgradeMultiplier: 1.65,
+
+    megaUpgradeIncrease: 5,
+    megaUpgradeStartingCost: 180,
+    megaUpgradeMultiplier: 1.7
+};
+
+const SAVE_KEY = "neegyClickerSave_v1";
+
+
+// ==========================================
+//  GAME DATA
+// ==========================================
+
+function defaultData() {
+    return {
+        balance: 0,
+        lifetimeEarned: 0,
+        totalClicks: 0,
+
+        clickUpgrades: 0,
+        autoUpgrades: 0,
+        megaUpgrades: 0,
+
+        milestones: []
+    };
+}
+
+let data = defaultData();
+
+
+// ==========================================
+//  LOAD SAVED PROGRESS
+// ==========================================
+
+function loadGame() {
+    try {
+        const saved = localStorage.getItem(SAVE_KEY);
+
+        if (saved) {
+            const parsed = JSON.parse(saved);
+
+            data = {
+                ...defaultData(),
+                ...parsed
+            };
+
+            // Keep saved values safe and valid.
+            for (const key of [
+                "balance",
+                "lifetimeEarned",
+                "totalClicks",
+                "clickUpgrades",
+                "autoUpgrades",
+                "megaUpgrades"
+            ]) {
+                const value = Number(data[key]);
+
+                data[key] = Number.isFinite(value)
+                    ? Math.max(0, value)
+                    : 0;
+            }
+
+            if (!Array.isArray(data.milestones)) {
+                data.milestones = [];
+            }
+        }
+    } catch (error) {
+        console.error("Could not load saved game:", error);
+        data = defaultData();
+    }
+}
+
+function saveGame() {
+    try {
+        localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+    } catch (error) {
+        console.error("Could not save game:", error);
+
+        document.getElementById("saveStatus").textContent =
+            "⚠️ Saving is unavailable in this browser.";
+    }
+}
+
+
+// ==========================================
+//  GAME CALCULATIONS
+// ==========================================
+
+function getClickPower() {
+    return SETTINGS.startingClick
+        + data.clickUpgrades * SETTINGS.clickUpgradeIncrease
+        + data.megaUpgrades * SETTINGS.megaUpgradeIncrease;
+}
+
+function getPassiveIncome() {
+    return data.autoUpgrades * SETTINGS.autoUpgradeIncrease;
+}
+
+function getUpgradeCost(type) {
+    if (type === "click") {
+        return Math.floor(
+            SETTINGS.clickUpgradeStartingCost *
+            Math.pow(SETTINGS.clickUpgradeMultiplier, data.clickUpgrades)
+        );
+    }
+
+    if (type === "auto") {
+        return Math.floor(
+            SETTINGS.autoUpgradeStartingCost *
+            Math.pow(SETTINGS.autoUpgradeMultiplier, data.autoUpgrades)
+        );
+    }
+
+    if (type === "mega") {
+        return Math.floor(
+            SETTINGS.megaUpgradeStartingCost *
+            Math.pow(SETTINGS.megaUpgradeMultiplier, data.megaUpgrades)
+        );
+    }
+
+    return 0;
+}
+
+
+// ==========================================
+//  DISPLAY FORMATTING
+// ==========================================
+
+function formatNumber(number) {
+    const value = Math.floor(number);
+
+    return value.toLocaleString("en-US");
+}
+
+
+// ==========================================
+//  UPDATE THE GAME INTERFACE
+// ==========================================
+
+function render() {
+
+    document.getElementById("balance").textContent =
+        formatNumber(data.balance);
+
+    document.getElementById("clickRate").textContent =
+        formatNumber(getClickPower());
+
+    document.getElementById("passiveRate").textContent =
+        formatNumber(getPassiveIncome());
+
+    document.getElementById("totalClicks").textContent =
+        formatNumber(data.totalClicks);
+
+    document.getElementById("totalEarned").textContent =
+        formatNumber(data.lifetimeEarned);
+
+
+    // Upgrade levels
+
+    document.getElementById("clickLevel").textContent =
+        "Level " + data.clickUpgrades;
+
+    document.getElementById("autoLevel").textContent =
+        "Level " + data.autoUpgrades;
+
+    document.getElementById("megaLevel").textContent =
+        "Level " + data.megaUpgrades;
+
+
+    // Upgrade prices
+
+    document.getElementById("buyClick").textContent =
+        "🪙 " + formatNumber(getUpgradeCost("click"));
+
+    document.getElementById("buyAuto").textContent =
+        "🪙 " + formatNumber(getUpgradeCost("auto"));
+
+    document.getElementById("buyMega").textContent =
+        "🪙 " + formatNumber(getUpgradeCost("mega"));
+
+
+    // Disable purchases if you cannot afford them.
+
+    document.getElementById("buyClick").disabled =
+        data.balance < getUpgradeCost("click");
+
+    document.getElementById("buyAuto").disabled =
+        data.balance < getUpgradeCost("auto");
+
+    document.getElementById("buyMega").disabled =
+        data.balance < getUpgradeCost("mega");
+}
+
+
+// ==========================================
+//  EARNING NEegies
+// ==========================================
+
+function earnNeegies(amount) {
+
+    data.balance += amount;
+    data.lifetimeEarned += amount;
+
+    render();
+
+    checkMilestones();
+}
+
+
+// ==========================================
+//  CLICKING NEegy
+// ==========================================
+
+const coinButton = document.getElementById("coinButton");
+
+coinButton.addEventListener("click", function() {
+
+    const amount = getClickPower();
+
+    data.totalClicks++;
+
+    earnNeegies(amount);
+
+    // Restart the coin animation on every click.
+
+    coinButton.classList.remove("pop");
+
+    void coinButton.offsetWidth;
+
+    coinButton.classList.add("pop");
+
+
+    // Floating reward text.
+
+    showFloatingText("+" + formatNumber(amount));
+
+
+    // Sparkle burst!
+
+    sparkleBurst(7);
+
+    saveGame();
+
+});
+
+
+// ==========================================
+//  BUY UPGRADES
+// ==========================================
+
+function buyUpgrade(type) {
+
+    const cost = getUpgradeCost(type);
+
+    if (data.balance < cost) {
+        return;
+    }
+
+    data.balance -= cost;
+
+    if (type === "click") {
+        data.clickUpgrades++;
+        showToast("👆 Stronger clicks unlocked!");
+    }
+
+    else if (type === "auto") {
+        data.autoUpgrades++;
+        showToast("⚙️ Your Neegy Factory is working!");
+    }
+
+    else if (type === "mega") {
+        data.megaUpgrades++;
+        showToast("💪 Golden Strength upgraded!");
+    }
+
+    render();
+    saveGame();
+}
+
+document.getElementById("buyClick").addEventListener("click", () => {
+    buyUpgrade("click");
+});
+
+document.getElementById("buyAuto").addEventListener("click", () => {
+    buyUpgrade("auto");
+});
+
+document.getElementById("buyMega").addEventListener("click", () => {
+    buyUpgrade("mega");
+});
+
+
+// ==========================================
+//  AUTOMATIC INCOME
+// ==========================================
+
+// Update four times per second for smooth income.
+
+setInterval(function() {
+
+    const income = getPassiveIncome();
+
+    if (income > 0) {
+        earnNeegies(income / 4);
+    }
+
+}, 250);
+
+
+// ==========================================
+//  FLOATING REWARD TEXT
+// ==========================================
+
+function showFloatingText(text) {
+
+    const layer = document.getElementById("floatingLayer");
+
+    const element = document.createElement("div");
+
+    element.className = "floating-text";
+    element.textContent = text;
+
+    element.style.left = (43 + Math.random() * 14) + "%";
+    element.style.top = (32 + Math.random() * 25) + "%";
+
+    layer.appendChild(element);
+
+    setTimeout(() => {
+        element.remove();
+    }, 850);
+}
+
+
+// ==========================================
+//  SPARKLES
+// ==========================================
+
+const sparkleLayer = document.getElementById("sparkleLayer");
+const coinStage = document.getElementById("coinStage");
+
+function createSparkle() {
+
+    const rect = coinStage.getBoundingClientRect();
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const angle = Math.random() * Math.PI * 2;
+
+    const radius = Math.min(rect.width, rect.height) *
+        (0.39 + Math.random() * 0.09);
+
+    const x = centerX + Math.cos(angle) * radius;
+    const y = centerY + Math.sin(angle) * radius;
+
+    const star = document.createElement("span");
+
+    const symbols = ["✦", "✧", "⋆", "✶"];
+
+    star.className = "sparkle";
+    star.textContent = symbols[
+        Math.floor(Math.random() * symbols.length)
+    ];
+
+    star.style.left = x + "px";
+    star.style.top = y + "px";
+
+    star.style.fontSize = (12 + Math.random() * 17) + "px";
+
+    sparkleLayer.appendChild(star);
+
+    setTimeout(() => {
+        star.remove();
+    }, 950);
+}
+
+function sparkleBurst(amount) {
+
+    for (let i = 0; i < amount; i++) {
+        setTimeout(() => {
+            createSparkle();
+        }, i * 45);
+    }
+}
+
+
+// Random sparkles appear even when you're not clicking.
+
+function scheduleRandomSparkles() {
+
+    const delay = 700 + Math.random() * 1400;
+
+    setTimeout(() => {
+
+        createSparkle();
+
+        if (Math.random() > 0.55) {
+            createSparkle();
+        }
+
+        scheduleRandomSparkles();
+
+    }, delay);
+}
+
+scheduleRandomSparkles();
+
+
+// ==========================================
+//  MILESTONES
+// ==========================================
+
+const milestones = [
+    { amount: 100, message: "🎉 100 lifetime Neegies!" },
+    { amount: 500, message: "⭐ 500 lifetime Neegies!" },
+    { amount: 1000, message: "🏆 1,000 lifetime Neegies!" },
+    { amount: 5000, message: "✨ 5,000 lifetime Neegies!" },
+    { amount: 10000, message: "👑 10,000 lifetime Neegies!" }
+];
+
+function checkMilestones() {
+
+    milestones.forEach(milestone => {
+
+        if (
+            data.lifetimeEarned >= milestone.amount &&
+            !data.milestones.includes(milestone.amount)
+        ) {
+
+            data.milestones.push(milestone.amount);
+
+            showToast(milestone.message);
+
+            sparkleBurst(12);
+
+            saveGame();
+        }
+
+    });
+}
+
+
+// ==========================================
+//  NOTIFICATIONS
+// ==========================================
+
+let toastTimeout;
+
+function showToast(message) {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimeout);
+
+    toastTimeout = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2400);
+}
+
+
+// ==========================================
+//  RESET GAME
+// ==========================================
+
+document.getElementById("resetButton").addEventListener("click", function() {
+
+    const confirmed = confirm(
+        "Are you sure you want to reset all your Neegy Clicker progress?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    data = defaultData();
+
+    saveGame();
+    render();
+
+    sparkleBurst(12);
+
+    showToast("🔄 Game progress reset!");
+
+});
+
+
+// ==========================================
+//  AUTOMATIC SAVING
+// ==========================================
+
+// Save periodically.
+
+setInterval(saveGame, 2000);
+
+// Save when leaving the page.
+
+window.addEventListener("pagehide", saveGame);
+
+// Save when switching tabs.
+
+document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "hidden") {
+        saveGame();
+    }
+});
+
+
+// ==========================================
+//  START GAME
+// ==========================================
+
+const coinImage = document.getElementById("coinImage");
+
+coinImage.addEventListener("error", function() {
+    coinImage.style.display = "none";
+    document.getElementById("coinFallback").style.display = "block";
+});
+
+loadGame();
+
+render();
+
+saveGame();
+
+</script>
+
+</body>
+</html>
