@@ -956,7 +956,113 @@ document.getElementById("logoutButton").addEventListener(
 
   }
 );
+// PLAYERS MANAGEMENT
 
+let playersData = [];
+
+async function loadPlayers() {
+  const container = document.getElementById("playersList");
+
+  container.innerHTML = "<p>Loading players...</p>";
+
+  try {
+    const response = await fetch(API + "/api/admin/players", {
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem(TOKEN_KEY)
+      }
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || "Could not load players.");
+    }
+
+    playersData = result.players || [];
+    renderPlayers();
+
+  } catch (error) {
+    container.innerHTML =
+      '<div class="empty-state">Could not load players: ' +
+      error.message +
+      '</div>';
+  }
+}
+
+function renderPlayers() {
+  const container = document.getElementById("playersList");
+  const search = document.getElementById("playerSearch").value
+    .trim()
+    .toLowerCase();
+
+  const filtered = playersData.filter(player =>
+    (player.username || "").toLowerCase().includes(search)
+  );
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        ${playersData.length === 0
+          ? "No registered players yet."
+          : "No players match your search."}
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Status</th>
+            <th>Games</th>
+            <th>Achievements</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${filtered.map(player => `
+            <tr>
+              <td><strong>${escapeHTML(player.username)}</strong></td>
+              <td>${escapeHTML(player.status || "active")}</td>
+              <td>${Number(player.games_count || 0)}</td>
+              <td>${Number(player.achievements_count || 0)}</td>
+              <td>
+                <button class="btn" onclick="viewPlayer('${escapeHTML(player.id)}')">
+                  View
+                </button>
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+function viewPlayer(playerId) {
+  const player = playersData.find(item => item.id === playerId);
+  if (!player) return;
+
+  alert(
+    "Username: " + player.username +
+    "\nStatus: " + (player.status || "active") +
+    "\nGames: " + (player.games_count || 0) +
+    "\nAchievements: " + (player.achievements_count || 0)
+  );
+}
 // START
 
 checkLogin();
