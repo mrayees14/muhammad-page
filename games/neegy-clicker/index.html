@@ -1448,6 +1448,8 @@ function renderBuildings() {
         const owned = getOwned(building.id);
         const price = getBuildingPrice(building);
         const production = getBuildingProduction(building);
+        const upgrades = getBuildingUpgradeCount(building.id);
+        const productionEach = building.baseRate * Math.pow(2, upgrades);
 
         const affordable = data.balance >= price;
 
