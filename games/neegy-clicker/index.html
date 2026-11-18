@@ -1468,9 +1468,15 @@ function renderBuildings() {
                 <h3>${building.name}</h3>
 
                 <p>
-                    ${formatNumber(production)} Neegies/s
-                    · ${owned} owned
-                </p>
+    ${formatNumber(productionEach)} Neegies/s each
+    <br>
+    ${formatNumber(production)} Neegies/s total
+    <br>
+    ${owned} owned
+    ${building.id === "finger"
+        ? `<br>${formatNumber(getClickPower())} Neegies per click`
+        : ""}
+</p>
 
             </div>
 
