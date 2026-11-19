@@ -256,6 +256,88 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+    /* ADMIN BUBBLE */
+
+.admin-bubble {
+    border: 1px solid #8968ff;
+    background: linear-gradient(135deg, #8968ff, #42b9ff);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-family: inherit;
+    font-weight: 900;
+    font-size: 13px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.admin-bubble:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px #8968ff66;
+}
+
+/* ADMIN POPUP */
+
+#adminPopup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #080b18dd;
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.admin-window {
+    width: 100%;
+    max-width: 1250px;
+    height: 92vh;
+    background: #1b2140;
+    border: 1px solid #8968ff66;
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 25px 90px #0009;
+}
+
+.admin-window iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #101426;
+}
+
+.admin-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 5;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #ffffff30;
+    border-radius: 50%;
+    background: #252b4d;
+    color: white;
+    font-size: 21px;
+    cursor: pointer;
+}
+
+.admin-close:hover {
+    background: #8968ff;
+}
+
+@media(max-width: 600px) {
+    #adminPopup {
+        padding: 8px;
+    }
+
+    .admin-window {
+        height: 96vh;
+        border-radius: 14px;
+    }
+}
 </style>
 </head>
 
@@ -265,9 +347,12 @@ footer {
     <div class="logo">🎮 The Arcade</div>
 
     <nav>
-        <a href="./">Home</a>
-        <a href="#games">Games</a>
-    </nav>
+    <a href="./">Home</a>
+    <a href="#games">Games</a>
+    <button class="admin-bubble" onclick="openAdminPopup()">
+        🛡️ Admin
+    </button>
+</nav>
 </header>
 
 <main class="container">
@@ -362,7 +447,45 @@ footer {
     </section>
 
 </main>
+<!-- ADMIN POPUP -->
 
+<div id="adminPopup" onclick="closeAdminPopupOutside(event)">
+    <div class="admin-window">
+
+        <button class="admin-close"
+                onclick="closeAdminPopup()">
+            ×
+        </button>
+
+        <iframe
+            src="admin/"
+            title="Games Admin Panel">
+        </iframe>
+
+    </div>
+</div>
+
+<script>
+function openAdminPopup() {
+    document.getElementById("adminPopup").style.display = "flex";
+}
+
+function closeAdminPopup() {
+    document.getElementById("adminPopup").style.display = "none";
+}
+
+function closeAdminPopupOutside(event) {
+    if (event.target.id === "adminPopup") {
+        closeAdminPopup();
+    }
+}
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        closeAdminPopup();
+    }
+});
+</script>
 <footer>
     Made for fun. More games coming soon! 🎮
 </footer>
