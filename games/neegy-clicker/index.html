@@ -1,4 +1,4 @@
-
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1981,29 +1981,35 @@ function showToast(message) {
 
 
 // ==================================================
-// RESET GAME
+// RESET GAME — CUSTOM POPUP
 // ==================================================
 
+const resetModal = document.getElementById("resetModal");
+
 document.getElementById("resetButton").addEventListener("click", () => {
+    resetModal.style.display = "flex";
+});
 
-    const confirmed = confirm(
-        "Are you sure? This will delete all your Neegy Clicker progress."
-    );
+document.getElementById("cancelReset").addEventListener("click", () => {
+    resetModal.style.display = "none";
+});
 
-    if (!confirmed) {
-        return;
-    }
+document.getElementById("confirmReset").addEventListener("click", () => {
+    resetModal.style.display = "none";
 
     data = defaultData();
 
     saveGame();
-
     render();
-
     sparkleBurst(15);
 
     showToast("🔄 Neegy Clicker has been reset!");
+});
 
+resetModal.addEventListener("click", (event) => {
+    if (event.target === resetModal) {
+        resetModal.style.display = "none";
+    }
 });
 
 
@@ -2050,6 +2056,64 @@ render();
 saveGame();
 
 </script>
+<!-- CUSTOM RESET CONFIRMATION -->
+<div id="resetModal" style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+">
+    <div style="
+        background:#252a46;
+        border:1px solid #ffc94f55;
+        border-radius:22px;
+        padding:30px;
+        width:100%;
+        max-width:390px;
+        text-align:center;
+        box-shadow:0 20px 70px #0009;
+    ">
+        <div style="font-size:42px;margin-bottom:12px;">⚠️</div>
 
+        <h2 style="color:#fff;margin-bottom:10px;">
+            Reset Neegy Clicker?
+        </h2>
+
+        <p style="color:#aeb3cd;line-height:1.6;margin-bottom:25px;">
+            Are you sure? This will erase all your current Neegy Clicker progress.
+            This action cannot be undone.
+        </p>
+
+        <div style="display:flex;gap:10px;">
+            <button id="cancelReset" style="
+                flex:1;
+                padding:12px;
+                border:1px solid #ffffff25;
+                border-radius:12px;
+                background:#ffffff12;
+                color:white;
+                font-family:inherit;
+                font-weight:900;
+                cursor:pointer;
+            ">Cancel</button>
+
+            <button id="confirmReset" style="
+                flex:1;
+                padding:12px;
+                border:0;
+                border-radius:12px;
+                background:#ffc94f;
+                color:#27203b;
+                font-family:inherit;
+                font-weight:900;
+                cursor:pointer;
+            ">Reset Game</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
